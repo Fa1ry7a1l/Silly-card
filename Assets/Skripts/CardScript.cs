@@ -8,6 +8,7 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     Camera MainCamera;
     Vector3 offset;
     public Transform DefaultParent;
+    public bool IsDraggable;
 
     void Awake()
     {
@@ -21,12 +22,20 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         DefaultParent = transform.parent;
 
+        IsDraggable = DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND;
+
+        if (!IsDraggable)
+            return;
+
         transform.SetParent(DefaultParent.parent);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!IsDraggable)
+            return;
+
         Vector3 newPos = MainCamera.ScreenToWorldPoint(eventData.position);
         newPos.z = 0;
         transform.position = newPos + offset;
@@ -34,6 +43,9 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
+        if (!IsDraggable)
+            return;
+
         transform.SetParent(DefaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
