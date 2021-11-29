@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!225 &6974278
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -707,6 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!225 &398865521
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -731,6 +733,7 @@ GameObject:
   - component: {fileID: 422499458}
   - component: {fileID: 422499457}
   - component: {fileID: 422499456}
+  - component: {fileID: 422499459}
   m_Layer: 5
   m_Name: EnemyField (4)
   m_TagString: Untagged
@@ -821,6 +824,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422499454}
   m_CullTransparentMesh: 1
+--- !u!114 &422499459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422499454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &440207185
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +849,7 @@ GameObject:
   - component: {fileID: 440207189}
   - component: {fileID: 440207188}
   - component: {fileID: 440207187}
+  - component: {fileID: 440207190}
   m_Layer: 5
   m_Name: EnemyField (6)
   m_TagString: Untagged
@@ -923,6 +940,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440207185}
   m_CullTransparentMesh: 1
+--- !u!114 &440207190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440207185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &442427084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 1
 --- !u!1 &476395473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,6 +1402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!225 &538671637
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1948,6 +1980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!225 &704785594
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2658,6 +2691,7 @@ GameObject:
   - component: {fileID: 926897996}
   - component: {fileID: 926897995}
   - component: {fileID: 926897994}
+  - component: {fileID: 926897997}
   m_Layer: 5
   m_Name: EnemyField (2)
   m_TagString: Untagged
@@ -2748,6 +2782,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926897992}
   m_CullTransparentMesh: 1
+--- !u!114 &926897997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926897992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &999126447
 GameObject:
   m_ObjectHideFlags: 0
@@ -3399,6 +3446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &1214475469
 GameObject:
   m_ObjectHideFlags: 0
@@ -3514,6 +3562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &1238789690
 GameObject:
   m_ObjectHideFlags: 0
@@ -3526,6 +3575,7 @@ GameObject:
   - component: {fileID: 1238789694}
   - component: {fileID: 1238789693}
   - component: {fileID: 1238789692}
+  - component: {fileID: 1238789695}
   m_Layer: 5
   m_Name: EnemyField (1)
   m_TagString: Untagged
@@ -3616,6 +3666,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238789690}
   m_CullTransparentMesh: 1
+--- !u!114 &1238789695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238789690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &1289600787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3628,6 +3691,7 @@ GameObject:
   - component: {fileID: 1289600791}
   - component: {fileID: 1289600790}
   - component: {fileID: 1289600789}
+  - component: {fileID: 1289600792}
   m_Layer: 5
   m_Name: EnemyField (5)
   m_TagString: Untagged
@@ -3718,6 +3782,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289600787}
   m_CullTransparentMesh: 1
+--- !u!114 &1289600792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289600787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &1300400870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4231,6 +4308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &1517212721
 GameObject:
   m_ObjectHideFlags: 0
@@ -4890,6 +4968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &1760188336
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,6 +5061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!225 &1760188341
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5684,6 +5764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &1927234771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5851,6 +5932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultParent: {fileID: 0}
+  IsDraggable: 0
 --- !u!225 &1940815400
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6187,6 +6269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &2047531472
 GameObject:
   m_ObjectHideFlags: 0
@@ -6199,6 +6282,7 @@ GameObject:
   - component: {fileID: 2047531476}
   - component: {fileID: 2047531475}
   - component: {fileID: 2047531474}
+  - component: {fileID: 2047531477}
   m_Layer: 5
   m_Name: EnemyField (3)
   m_TagString: Untagged
@@ -6289,6 +6373,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047531472}
   m_CullTransparentMesh: 1
+--- !u!114 &2047531477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047531472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873e0cbbdb2eba48bf1289008f949b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1 &2078412945
 GameObject:
   m_ObjectHideFlags: 0
