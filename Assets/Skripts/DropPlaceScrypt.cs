@@ -23,7 +23,7 @@ public class DropPlaceScrypt : MonoBehaviour, IDropHandler, IPointerEnterHandler
             return; //потом заменится скидыванием предыдущей в отбой
 
 
-        CardScript card = eventData.pointerDrag.GetComponent<CardScript>();
+        CardMovementSrc card = eventData.pointerDrag.GetComponent<CardMovementSrc>();
         
         if(card)
         {

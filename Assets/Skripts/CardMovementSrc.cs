@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     Camera MainCamera;
     Vector3 offset;
+    GameManagerSrc GameManager;
     public Transform DefaultParent;
     public bool IsDraggable;
 
     void Awake()
     {
         MainCamera = Camera.allCameras[0];
+        GameManager = FindObjectOfType<GameManagerSrc>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -22,7 +24,7 @@ public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         DefaultParent = transform.parent;
 
-        IsDraggable = DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND;
+        IsDraggable = DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND && GameManager.IsPlayerTurn;
 
         if (!IsDraggable)
             return;
