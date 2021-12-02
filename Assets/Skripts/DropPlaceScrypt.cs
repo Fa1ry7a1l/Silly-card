@@ -27,6 +27,8 @@ public class DropPlaceScrypt : MonoBehaviour, IDropHandler, IPointerEnterHandler
         
         if(card)
         {
+            card.GameManager.CurrentGame.PlayerHand.Remove(card.GetComponent<CardShowSrc>());
+            card.GameManager.CurrentGame.PlayerField.AddFirst(card.GetComponent<CardShowSrc>());
             card.DefaultParent = transform;
         }
     }

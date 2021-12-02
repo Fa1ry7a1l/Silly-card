@@ -27,46 +27,46 @@ public class Game
     /// <summary>
     /// Рука противника
     /// </summary>
-    public LinkedList<Card> EnemyHand;
+    public LinkedList<CardShowSrc> EnemyHand;
 
     /// <summary>
     /// Рука игрока
     /// </summary>
-    public LinkedList<Card> PlayerHand;
+    public LinkedList<CardShowSrc> PlayerHand;
 
     /// <summary>
     /// Поле противника
     /// </summary>
-    public LinkedList<Card> EnemyField;
+    public LinkedList<CardShowSrc> EnemyField;
 
     /// <summary>
     /// Поле игрока
     /// </summary>
-    public LinkedList<Card> PlayerField;
+    public LinkedList<CardShowSrc> PlayerField;
 
     /// <summary>
     /// Сброс противника
     /// </summary>
-    public LinkedList<Card> EnemyFold;
+    public LinkedList<CardShowSrc> EnemyFold;
 
     /// <summary>
     /// Сброс игрока
     /// </summary>
-    public LinkedList<Card> PlayerFold;
+    public LinkedList<CardShowSrc> PlayerFold;
 
     public Game()
     {
         EnemyDeck = GiveDeckCard();
         PlayerDeck = GiveDeckCard();
 
-        EnemyField = new LinkedList<Card>();
-        PlayerField = new LinkedList<Card>();
+        EnemyField = new LinkedList<CardShowSrc>();
+        PlayerField = new LinkedList<CardShowSrc>();
 
-        EnemyHand = new LinkedList<Card>();
-        PlayerHand = new LinkedList<Card>();
+        EnemyHand = new LinkedList<CardShowSrc>();
+        PlayerHand = new LinkedList<CardShowSrc>();
 
-        EnemyFold = new LinkedList<Card>();
-        PlayerFold = new LinkedList<Card>();
+        EnemyFold = new LinkedList<CardShowSrc>();
+        PlayerFold = new LinkedList<CardShowSrc>();
     }
 
 
@@ -113,11 +113,11 @@ public class GameManagerSrc : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <param name="hand"></param>
-    void GiveHandCards(LinkedList<Card> deck, Transform hand)
+    void GiveHandCards(LinkedList<Card> deck, Transform handTransform)
     {
         for (int i = 0; i < Game.StartHandSize; i++)
         {
-            GiveCardToHand(deck, hand);
+            GiveCardToHand(deck, handTransform);
         }
     }
 
@@ -126,23 +126,27 @@ public class GameManagerSrc : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <param name="hand"></param>
-    void GiveCardToHand(LinkedList<Card> deck, Transform hand)
+    void GiveCardToHand(LinkedList<Card> deck, Transform handTransform)
     {
         if (deck.Count == 0)
             return;
         Card card = deck.First.Value;
         deck.RemoveFirst();
 
-        GameObject CardGo = Instantiate(CardPref, hand, false);
-        if (hand == EnemyHand)
+        GameObject CardGo = Instantiate(CardPref, handTransform, false);
+        if (handTransform == EnemyHand)
         {
             CardGo.GetComponent<CardShowSrc>().HideCardInfo(card);
+            CurrentGame.EnemyHand.AddFirst(CardGo.GetComponent<CardShowSrc>());
         }
         else
         {
             CardGo.GetComponent<CardShowSrc>().ShowCardInfo(card);
+            CurrentGame.PlayerHand.AddFirst(CardGo.GetComponent<CardShowSrc>());
+
 
         }
+
     }
 
     public bool IsPlayerTurn
@@ -155,9 +159,9 @@ public class GameManagerSrc : MonoBehaviour
         TurnTime = 30;
         TurnTimeText.text = TurnTime.ToString();
 
-        if(IsPlayerTurn)
+        if (IsPlayerTurn)
         {
-            while(TurnTime-- >0)
+            while (TurnTime-- > 0)
             {
                 TurnTimeText.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
@@ -167,12 +171,26 @@ public class GameManagerSrc : MonoBehaviour
         }
         else
         {
-            while(TurnTime-- > 27)
+            while (TurnTime-- > 27)
             {
                 TurnTimeText.text = "Ход противника";
                 yield return new WaitForSeconds(1);
             }
+            EnemyTurn();
             ChangeTurn();
+        }
+    }
+
+    // todo реализуй
+    void EnemyTurn()
+    {
+        if(CurrentGame.EnemyHand.Count > 0)
+        {
+            int count = Random.Range(0, CurrentGame.EnemyHand.Count + 1);
+            for (int i = 0; i < count; i++)
+            {
+
+            }
         }
     }
 

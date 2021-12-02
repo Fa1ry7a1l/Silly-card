@@ -7,7 +7,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     Camera MainCamera;
     Vector3 offset;
-    GameManagerSrc GameManager;
+    public GameManagerSrc GameManager;
     public Transform DefaultParent;
     public bool IsDraggable;
 
