@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using Random = UnityEngine.Random;
 
 public class Game
 {
@@ -13,60 +15,62 @@ public class Game
 
     public const int StartHandSize = 4;
 
+    public const int MaxFieldSize = 6;
+
 
     /// <summary>
     /// Колода противника
     /// </summary>
-    public LinkedList<Card> EnemyDeck;
+    public List<Card> EnemyDeck;
 
     /// <summary>
     /// Колода игрока
     /// </summary>
-    public LinkedList<Card> PlayerDeck;
+    public List<Card> PlayerDeck;
 
     /// <summary>
     /// Рука противника
     /// </summary>
-    public LinkedList<CardShowSrc> EnemyHand;
+    public List<CardShowSrc> EnemyHand;
 
     /// <summary>
     /// Рука игрока
     /// </summary>
-    public LinkedList<CardShowSrc> PlayerHand;
+    public List<CardShowSrc> PlayerHand;
 
     /// <summary>
     /// Поле противника
     /// </summary>
-    public LinkedList<CardShowSrc> EnemyField;
+    public List<CardShowSrc> EnemyField;
 
     /// <summary>
     /// Поле игрока
     /// </summary>
-    public LinkedList<CardShowSrc> PlayerField;
+    public List<CardShowSrc> PlayerField;
 
     /// <summary>
     /// Сброс противника
     /// </summary>
-    public LinkedList<CardShowSrc> EnemyFold;
+    public List<CardShowSrc> EnemyFold;
 
     /// <summary>
     /// Сброс игрока
     /// </summary>
-    public LinkedList<CardShowSrc> PlayerFold;
+    public List<CardShowSrc> PlayerFold;
 
     public Game()
     {
         EnemyDeck = GiveDeckCard();
         PlayerDeck = GiveDeckCard();
 
-        EnemyField = new LinkedList<CardShowSrc>();
-        PlayerField = new LinkedList<CardShowSrc>();
+        EnemyField = new List<CardShowSrc>();
+        PlayerField = new List<CardShowSrc>();
 
-        EnemyHand = new LinkedList<CardShowSrc>();
-        PlayerHand = new LinkedList<CardShowSrc>();
+        EnemyHand = new List<CardShowSrc>();
+        PlayerHand = new List<CardShowSrc>();
 
-        EnemyFold = new LinkedList<CardShowSrc>();
-        PlayerFold = new LinkedList<CardShowSrc>();
+        EnemyFold = new List<CardShowSrc>();
+        PlayerFold = new List<CardShowSrc>();
     }
 
 
@@ -74,13 +78,13 @@ public class Game
     /// выдает  стартовую колоду карт
     /// </summary>
     /// <returns></returns>
-    LinkedList<Card> GiveDeckCard()
+    List<Card> GiveDeckCard()
     {
-        LinkedList<Card> cards = new LinkedList<Card>();
+        List<Card> cards = new List<Card>();
 
         for (int i = 0; i < DeckSize; i++)
         {
-            cards.AddFirst(CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)]);
+            cards.Add(CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)]);
         }
 
         return cards;
@@ -91,6 +95,7 @@ public class GameManagerSrc : MonoBehaviour
 {
     public Game CurrentGame;
     public Transform EnemyHand, PlayerHand;
+    public Transform EnemyField, PlayerField;
     public GameObject CardPref;
     int Turn, TurnTime = 30;
     public TextMeshProUGUI TurnTimeText;
@@ -113,7 +118,7 @@ public class GameManagerSrc : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <param name="hand"></param>
-    void GiveHandCards(LinkedList<Card> deck, Transform handTransform)
+    void GiveHandCards(List<Card> deck, Transform handTransform)
     {
         for (int i = 0; i < Game.StartHandSize; i++)
         {
@@ -126,23 +131,23 @@ public class GameManagerSrc : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <param name="hand"></param>
-    void GiveCardToHand(LinkedList<Card> deck, Transform handTransform)
+    void GiveCardToHand(List<Card> deck, Transform handTransform)
     {
         if (deck.Count == 0)
             return;
-        Card card = deck.First.Value;
-        deck.RemoveFirst();
+        Card card = deck[0];
+        deck.Remove(card);
 
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
         if (handTransform == EnemyHand)
         {
             CardGo.GetComponent<CardShowSrc>().HideCardInfo(card);
-            CurrentGame.EnemyHand.AddFirst(CardGo.GetComponent<CardShowSrc>());
+            CurrentGame.EnemyHand.Add(CardGo.GetComponent<CardShowSrc>());
         }
         else
         {
             CardGo.GetComponent<CardShowSrc>().ShowCardInfo(card);
-            CurrentGame.PlayerHand.AddFirst(CardGo.GetComponent<CardShowSrc>());
+            CurrentGame.PlayerHand.Add(CardGo.GetComponent<CardShowSrc>());
 
 
         }
@@ -184,15 +189,44 @@ public class GameManagerSrc : MonoBehaviour
     // todo реализуй
     void EnemyTurn()
     {
-        if(CurrentGame.EnemyHand.Count > 0)
+        if (CurrentGame.EnemyHand.Count > 0)
         {
             int count = Random.Range(0, CurrentGame.EnemyHand.Count + 1);
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count && CurrentGame.EnemyField.Count < Game.MaxFieldSize; i++)
             {
+                Console.WriteLine(i);
+                CurrentGame.EnemyHand[i].ShowCardInfo(CurrentGame.EnemyHand[i].SelfCard);
+                CurrentGame.EnemyHand[i].transform.SetParent(GetNextPosition(Random.Range(0, Game.MaxFieldSize - CurrentGame.EnemyField.Count)));
 
+                CurrentGame.EnemyField.Add(CurrentGame.EnemyHand[i]);
+                CurrentGame.EnemyHand.Remove(CurrentGame.EnemyHand[i]);
             }
         }
     }
+
+    Transform GetNextPosition(int pos)
+    {
+        if (pos < 0 || pos > Game.MaxFieldSize - CurrentGame.EnemyField.Count)
+        {
+            throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count})");
+        }
+        pos++;
+        int counter = 0;
+        for (int i = 0; i < EnemyField.childCount; i++)
+        {
+            if (counter == pos && EnemyField.GetChild(i).childCount == 0)
+                return EnemyField.GetChild(i);
+
+            if (EnemyField.GetChild(i).childCount == 0)
+                counter++;
+            if (counter == pos && EnemyField.GetChild(i).childCount == 0)
+                return EnemyField.GetChild(i);
+
+        }
+        throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count}) in for loop");
+
+    }
+
 
     /// <summary>
     /// Изменение хода
@@ -219,6 +253,8 @@ public class GameManagerSrc : MonoBehaviour
         GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
         GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
+
+
 
 
 }
