@@ -7,7 +7,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     Camera MainCamera;
     Vector3 offset;
-    GameManagerSrc GameManager;
+    public GameManagerSrc GameManager;
     public Transform DefaultParent;
     public bool IsDraggable;
 
@@ -23,8 +23,13 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         offset.z = 0;
 
         DefaultParent = transform.parent;
+        CardShowSrc card = transform.GetComponent<CardShowSrc>();
 
-        IsDraggable = DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND && GameManager.IsPlayerTurn;
+        IsDraggable = (DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND ||
+            DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_FIELD
+            && transform.GetComponent<CardShowSrc>().SelfCard.CanAttack) &&
+            GameManager.IsPlayerTurn;
+
 
         if (!IsDraggable)
             return;
@@ -38,15 +43,20 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (!IsDraggable)
             return;
 
+
         Vector3 newPos = MainCamera.ScreenToWorldPoint(eventData.position);
         newPos.z = 0;
         transform.position = newPos + offset;
+
+
     }
 
-    void IEndDragHandler.OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
         if (!IsDraggable)
             return;
+
+
 
         transform.SetParent(DefaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;

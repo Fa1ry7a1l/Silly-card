@@ -16,24 +16,32 @@ public class DropPlaceScrypt : MonoBehaviour, IDropHandler, IPointerEnterHandler
     public FieldType Type;
     public void OnDrop(PointerEventData eventData)
     {
-        if (Type != FieldType.SELF_FIELD)
+        
+
+        if (Type != FieldType.SELF_FIELD || eventData.pointerDrag.GetComponent<CardMovementSrc>().DefaultParent.GetComponent<DropPlaceScrypt>().Type == Type)
             return;
 
         if (transform.childCount != 0)
-            return; //потом заменится скидыванием предыдущей в отбой
+        {
+            CardShowSrc card1 = transform.GetChild(0).GetComponent<CardShowSrc>();
+            FindObjectOfType<GameManagerSrc>().DestroyCard(card1);
+        }
 
 
         CardMovementSrc card = eventData.pointerDrag.GetComponent<CardMovementSrc>();
         
         if(card)
         {
+            card.GameManager.CurrentGame.PlayerHand.Remove(card.GetComponent<CardShowSrc>());
+            card.GameManager.CurrentGame.PlayerField.Add(card.GetComponent<CardShowSrc>());
             card.DefaultParent = transform;
         }
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerDrag==null || Type != FieldType.SELF_FIELD)
+        if (eventData.pointerDrag==null || Type == FieldType.ENEMY_FIELD ||Type == FieldType.ENEMY_HAND || Type == FieldType.SELF_HAND)
             return;
+        
     }
 }
