@@ -9,7 +9,7 @@ public class CardShowSrc : MonoBehaviour
     public Card SelfCard;
     public Image Logo;
     public TextMeshProUGUI Name, Attack, Defense;
-    public GameObject HideObj;
+    public GameObject HideObj, HilightedObj;
 
     public void HideCardInfo(Card card)
     {
@@ -27,12 +27,25 @@ public class CardShowSrc : MonoBehaviour
         Attack.text = card.Attack.ToString();
         Defense.text = card.Defense.ToString();
         HideObj.SetActive(false);
+        HilightedObj.SetActive(false);
     }
 
-    /*
-    private void Start()
+    public void HighlightCard()
     {
-        ShowCardInfo(CardManagerSrc.AllCards[transform.GetSiblingIndex() % CardManagerSrc.AllCards.Count]);
-    }*/
+        HilightedObj.SetActive(true);
+    }
+
+    public void DeHighlightCard()
+    {
+        HilightedObj.SetActive(false);
+
+    }
+
+    public void RafreshData()
+    {
+        Attack.text = SelfCard.Attack.ToString();
+        Defense.text = SelfCard.Defense.ToString();
+        
+    }
 
 }

@@ -105,9 +105,10 @@ public class GameManagerSrc : MonoBehaviour
     void Start()
     {
         Turn = 0;
+        CurrentGame = new Game();
+
         StartCoroutine(TurnFunc());
 
-        CurrentGame = new Game();
 
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
@@ -148,7 +149,7 @@ public class GameManagerSrc : MonoBehaviour
         {
             CardGo.GetComponent<CardShowSrc>().ShowCardInfo(card);
             CurrentGame.PlayerHand.Add(CardGo.GetComponent<CardShowSrc>());
-
+            CardGo.GetComponent<AttackedCard>().enabled = false;
 
         }
 
@@ -164,18 +165,44 @@ public class GameManagerSrc : MonoBehaviour
         TurnTime = 30;
         TurnTimeText.text = TurnTime.ToString();
 
+        foreach (var card in CurrentGame.PlayerField)
+        {
+            card.SelfCard.ChangeAttackState(false);
+            card.DeHighlightCard();
+        }
+        foreach (var card in CurrentGame.EnemyField)
+        {
+            card.SelfCard.ChangeAttackState(false);
+            card.SelfCard.ChangeAttackState(false);
+
+        }
+
+
+
         if (IsPlayerTurn)
         {
+            foreach(var card in CurrentGame.PlayerField)
+            {
+                card.SelfCard.ChangeAttackState(true);
+                card.HighlightCard();
+            }
+
             while (TurnTime-- > 0)
             {
                 TurnTimeText.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
+            
             ChangeTurn();
 
         }
         else
         {
+            foreach (var card in CurrentGame.EnemyField)
+            {
+                card.SelfCard.ChangeAttackState(true);
+            }
+
             while (TurnTime-- > 27)
             {
                 TurnTimeText.text = "’од противника";
@@ -191,10 +218,10 @@ public class GameManagerSrc : MonoBehaviour
     {
         if (CurrentGame.EnemyHand.Count > 0)
         {
+            //количество, карт, которое нужно отправить на поле
             int count = Random.Range(0, CurrentGame.EnemyHand.Count + 1);
-            for (int i = 0; i < count && CurrentGame.EnemyField.Count < Game.MaxFieldSize; i++)
+            for (int i = 0, counter = 0; counter < count && CurrentGame.EnemyField.Count < Game.MaxFieldSize; counter++)
             {
-                Console.WriteLine(i);
                 CurrentGame.EnemyHand[i].ShowCardInfo(CurrentGame.EnemyHand[i].SelfCard);
                 CurrentGame.EnemyHand[i].transform.SetParent(GetNextPosition(Random.Range(0, Game.MaxFieldSize - CurrentGame.EnemyField.Count)));
 
@@ -204,6 +231,7 @@ public class GameManagerSrc : MonoBehaviour
         }
     }
 
+    //почему то она иногда кидает out of range
     Transform GetNextPosition(int pos)
     {
         if (pos < 0 || pos > Game.MaxFieldSize - CurrentGame.EnemyField.Count)
@@ -255,6 +283,56 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
+    public void CardsFidht(CardShowSrc card1, CardShowSrc card2)
+    {
+        card1.SelfCard.GetDamage(card2.SelfCard.Attack);
+        card2.SelfCard.GetDamage(card1.SelfCard.Attack);
 
+        card1.DeHighlightCard();
+        card1.RafreshData();
+        card2.RafreshData();
+        if(!card1.SelfCard.IsAlive)
+        {
+            DestroyCard(card1);
+        }
+        if (!card2.SelfCard.IsAlive)
+        { 
+            DestroyCard(card2);
+        }
+    }
+
+    /// <summary>
+    /// ”ничтожает карту
+    /// </summary>
+    /// <param name="card"></param>
+    public void DestroyCard(CardShowSrc card)
+    {
+        card.GetComponent<CardMovementSrc>().OnEndDrag(null);
+
+        if (CurrentGame.PlayerField.Contains(card))
+        {
+            CurrentGame.PlayerField.Remove(card);
+            CurrentGame.PlayerFold.Add(card);
+        }
+        if (CurrentGame.PlayerHand.Contains(card))
+        {
+            CurrentGame.PlayerHand.Remove(card);
+            CurrentGame.PlayerFold.Add(card);
+
+        }
+        if (CurrentGame.EnemyField.Contains(card))
+        {
+            CurrentGame.EnemyField.Remove(card);
+            CurrentGame.EnemyFold.Add(card);
+
+        }
+        if (CurrentGame.EnemyHand.Contains(card))
+        {
+            CurrentGame.EnemyHand.Remove(card);
+            CurrentGame.EnemyFold.Add(card);
+
+        }
+        Destroy(card.gameObject);
+    }
 
 }
