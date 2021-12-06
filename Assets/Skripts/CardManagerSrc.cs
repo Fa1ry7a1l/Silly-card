@@ -6,17 +6,17 @@ public struct Card
 {
     //public int id;
     public string Name;
-    //public Sprite Logo;
+    public Sprite Logo;
     public int Attack, Defense;
 
     public bool CanAttack;
 
     public bool IsAlive { get { return Defense > 0; } }
 
-    public Card(string Name /*, string logoPath*/, int attack, int defense, bool canAttack = false)
+    public Card(string Name, string logoPath, int attack, int defense, bool canAttack = false)
     {
         this.Name = Name;
-        //Logo = Resources.Load<Sprite>(logoPath);
+        Logo = Resources.Load<Sprite>(logoPath);
         this.Attack = attack;
         this.Defense = defense;
         this.CanAttack = canAttack;
@@ -39,15 +39,15 @@ public class CardManagerSrc : MonoBehaviour
 
     public void Awake()
     {
-        CardManagerSrc.AllCards.Add(new Card("A", 1, 1));
-        CardManagerSrc.AllCards.Add(new Card("B", 2, 1));
-        CardManagerSrc.AllCards.Add(new Card("C", 3, 2));
-        CardManagerSrc.AllCards.Add(new Card("D", 4, 2));
-        CardManagerSrc.AllCards.Add(new Card("E", 2, 5));
-        CardManagerSrc.AllCards.Add(new Card("F", 3, 4));
-        CardManagerSrc.AllCards.Add(new Card("G", 0, 6));
-        CardManagerSrc.AllCards.Add(new Card("H", 3, 3));
-        CardManagerSrc.AllCards.Add(new Card("I", 5, 3));
-        CardManagerSrc.AllCards.Add(new Card("J", 2, 6));
+        CardManagerSrc.AllCards.Add(new Card("Àäñêèé êîò", "Ñharacters/inferno/inferno_cat", 1, 1));
+        CardManagerSrc.AllCards.Add(new Card("Àäñêèé êóëüòèñò", "Ñharacters/inferno/inferno_occultist", 2, 1));
+        CardManagerSrc.AllCards.Add(new Card("Äğóèä", "Ñharacters/metter/matter_druid", 3, 2));
+        CardManagerSrc.AllCards.Add(new Card("Âåäüìà", "Ñharacters/metter/matter_witch", 4, 2));
+        CardManagerSrc.AllCards.Add(new Card("Îõîòíèê çà ãîëîâàìè", "Ñharacters/neutral/neutral_bounty_hunter", 2, 5));
+        CardManagerSrc.AllCards.Add(new Card("Ïàëà÷", "Ñharacters/neutral/neutral_executioner", 3, 4));
+        CardManagerSrc.AllCards.Add(new Card("×àñû", "Ñharacters/time/time_clock", 0, 6));
+        CardManagerSrc.AllCards.Add(new Card("Ìîíàõ", "Ñharacters/time/time_monk", 3, 3));
+        CardManagerSrc.AllCards.Add(new Card("X", "Ñharacters/void/void_reaver", 5, 3));
+        CardManagerSrc.AllCards.Add(new Card("Âèğèäèñ", "Ñharacters/void/void_scolopendra2_0", 2, 6));
     }
 }

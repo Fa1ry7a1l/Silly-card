@@ -21,8 +21,8 @@ public class CardShowSrc : MonoBehaviour
     {
         SelfCard = card;
 
-        //Logo.sprite = card.Logo;
-        //Logo.preserveAspect = true;
+        Logo.sprite = card.Logo;
+        Logo.preserveAspect = true;
         Name.text = card.Name;
         Attack.text = card.Attack.ToString();
         Defense.text = card.Defense.ToString();
