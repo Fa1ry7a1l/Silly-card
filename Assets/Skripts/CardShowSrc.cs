@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CardShowSrc : MonoBehaviour
 {
     public Card SelfCard;
-    public Image Logo;
+    public Image Logo, ElementLogo;
     public TextMeshProUGUI Name, Attack, Defense;
     public GameObject HideObj, HilightedObj;
 
@@ -23,6 +23,28 @@ public class CardShowSrc : MonoBehaviour
 
         Logo.sprite = card.Logo;
         Logo.preserveAspect = true;
+        switch (card.Element)
+        {
+            case Element.Void:
+                ElementLogo.sprite = Resources.Load<Sprite>("Pin/void_element");
+                break;
+            case Element.Neutral:
+                ElementLogo.sprite = Resources.Load<Sprite>("Pin/neutral_element");
+                break;
+            case Element.Metter:
+                ElementLogo.sprite = Resources.Load<Sprite>("Pin/matter_element");
+                break;
+            case Element.Inferno:
+                ElementLogo.sprite = Resources.Load<Sprite>("Pin/inferno_element");
+                break;
+            case Element.Time:
+                ElementLogo.sprite = Resources.Load<Sprite>("Pin/time_element");
+                break;
+
+        }
+
+
+        ElementLogo.preserveAspect = true;
         Name.text = card.Name;
         Attack.text = card.Attack.ToString();
         Defense.text = card.Defense.ToString();
@@ -45,7 +67,7 @@ public class CardShowSrc : MonoBehaviour
     {
         Attack.text = SelfCard.Attack.ToString();
         Defense.text = SelfCard.Defense.ToString();
-        
+
     }
 
 }
