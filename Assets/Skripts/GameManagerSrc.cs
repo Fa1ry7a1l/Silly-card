@@ -101,6 +101,31 @@ public class GameManagerSrc : MonoBehaviour
     public TextMeshProUGUI TurnTimeText;
     public Button EndTurnButton;
 
+    private const int MaxManaPoolSize = 10;
+    private int _playerManaCounter = 0, _enemyManaCounter = 0;
+    public int PlayerManaCounter
+    {
+        get { return _playerManaCounter; }
+        set
+        {
+            if (value > 10) _playerManaCounter = 10;
+            else if (value < 0) _playerManaCounter = 0;
+            else _playerManaCounter = value;
+        }
+    }
+    public int EnemyManaCounter
+    {
+        get { return _enemyManaCounter; }
+        set
+        {
+            if (value > 10) _enemyManaCounter = 10;
+            else if (value < 0) _enemyManaCounter = 0;
+            else _enemyManaCounter = value;
+        }
+    }
+
+    public int PlayerMana = 0, EnemyMana = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -181,7 +206,7 @@ public class GameManagerSrc : MonoBehaviour
 
         if (IsPlayerTurn)
         {
-            foreach(var card in CurrentGame.PlayerField)
+            foreach (var card in CurrentGame.PlayerField)
             {
                 card.SelfCard.ChangeAttackState(true);
                 card.HighlightCard();
@@ -192,7 +217,7 @@ public class GameManagerSrc : MonoBehaviour
                 TurnTimeText.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
-            
+
             ChangeTurn();
 
         }
@@ -291,12 +316,12 @@ public class GameManagerSrc : MonoBehaviour
         card1.DeHighlightCard();
         card1.RafreshData();
         card2.RafreshData();
-        if(!card1.SelfCard.IsAlive)
+        if (!card1.SelfCard.IsAlive)
         {
             DestroyCard(card1);
         }
         if (!card2.SelfCard.IsAlive)
-        { 
+        {
             DestroyCard(card2);
         }
     }
