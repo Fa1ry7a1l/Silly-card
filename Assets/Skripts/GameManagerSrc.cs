@@ -126,6 +126,16 @@ public class GameManagerSrc : MonoBehaviour
 
     public int PlayerMana = 0, EnemyMana = 0;
 
+    public Transform EnemyHPBarTransform;
+    public Transform PlayerHPBarTransform;
+
+
+    private HPBar EnemyHPBar;
+    private HPBar PlayerHPBar;
+
+    public GameObject ResultGO;
+    public TextMeshProUGUI ResultText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -134,9 +144,15 @@ public class GameManagerSrc : MonoBehaviour
 
         StartCoroutine(TurnFunc());
 
+        PlayerHPBar = new HPBar(ref PlayerHPBarTransform);
+        EnemyHPBar = new HPBar(ref EnemyHPBarTransform);
+
 
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
+
+        PlayerHPBar.show();
+        EnemyHPBar.show();
     }
 
     /// <summary>
@@ -241,6 +257,7 @@ public class GameManagerSrc : MonoBehaviour
     // todo реализуй
     void EnemyTurn()
     {
+        //поправить для отправки карт на битву // todo
         if (CurrentGame.EnemyHand.Count > 0)
         {
             //количество, карт, которое нужно отправить на поле
@@ -256,7 +273,6 @@ public class GameManagerSrc : MonoBehaviour
         }
     }
 
-    //почему то она иногда кидает out of range
     Transform GetNextPosition(int pos)
     {
         if (pos < 0 || pos > Game.MaxFieldSize - CurrentGame.EnemyField.Count)
@@ -358,6 +374,34 @@ public class GameManagerSrc : MonoBehaviour
 
         }
         Destroy(card.gameObject);
+    }
+
+    public void DamageHero(CardShowSrc card, bool isEnemyAttacked)
+    {
+        int res;
+        if (isEnemyAttacked)
+            res = EnemyHPBar.ReduceHP(card.SelfCard.Attack);
+        else
+            res = PlayerHPBar.ReduceHP(card.SelfCard.Attack);
+        card.DeHighlightCard();
+
+        if (res == 0)
+            CheckForResult();
+    }
+
+    void CheckForResult()
+    {
+        if (PlayerHPBar.CurrentHP == 0 || EnemyHPBar.CurrentHP == 0)
+        {
+            ResultGO.SetActive(true);
+            StopAllCoroutines();
+
+            if (PlayerHPBar.CurrentHP == 0)
+                ResultText.text = "Повезет в другой раз";
+            else
+                ResultText.text = "Победа!";
+
+        }
     }
 
 }
