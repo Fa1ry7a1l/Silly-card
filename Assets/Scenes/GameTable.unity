@@ -1045,8 +1045,8 @@ MonoBehaviour:
   CardPref: {fileID: 195697604704514484, guid: adf8faf93f8dfd849bd01c4f97e45b48, type: 3}
   TurnTimeText: {fileID: 1536015773}
   EndTurnButton: {fileID: 1916910636}
-  PlayerMana: 0
-  EnemyMana: 0
+  EnemyManaBarTransform: {fileID: 1295720793}
+  PlayerManaBarTransform: {fileID: 189034679}
   EnemyHPBarTransform: {fileID: 588203999}
   PlayerHPBarTransform: {fileID: 1446250620}
   ResultGO: {fileID: 1101741926}
@@ -1427,7 +1427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1435,7 +1435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1479,7 +1479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1136.4
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3821,7 +3821,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00015231, y: -0.000066161}
+  m_AnchoredPosition: {x: 5, y: 0.00006485}
   m_SizeDelta: {x: 2560, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1743320727

@@ -6,91 +6,6 @@ using TMPro;
 using System;
 using Random = UnityEngine.Random;
 
-public class Game
-{
-    /// <summary>
-    /// Размер изначальной колоды
-    /// </summary>
-    public const int DeckSize = 10;
-
-    public const int StartHandSize = 4;
-
-    public const int MaxFieldSize = 6;
-
-
-    /// <summary>
-    /// Колода противника
-    /// </summary>
-    public List<Card> EnemyDeck;
-
-    /// <summary>
-    /// Колода игрока
-    /// </summary>
-    public List<Card> PlayerDeck;
-
-    /// <summary>
-    /// Рука противника
-    /// </summary>
-    public List<CardShowSrc> EnemyHand;
-
-    /// <summary>
-    /// Рука игрока
-    /// </summary>
-    public List<CardShowSrc> PlayerHand;
-
-    /// <summary>
-    /// Поле противника
-    /// </summary>
-    public List<CardShowSrc> EnemyField;
-
-    /// <summary>
-    /// Поле игрока
-    /// </summary>
-    public List<CardShowSrc> PlayerField;
-
-    /// <summary>
-    /// Сброс противника
-    /// </summary>
-    public List<CardShowSrc> EnemyFold;
-
-    /// <summary>
-    /// Сброс игрока
-    /// </summary>
-    public List<CardShowSrc> PlayerFold;
-
-    public Game()
-    {
-        EnemyDeck = GiveDeckCard();
-        PlayerDeck = GiveDeckCard();
-
-        EnemyField = new List<CardShowSrc>();
-        PlayerField = new List<CardShowSrc>();
-
-        EnemyHand = new List<CardShowSrc>();
-        PlayerHand = new List<CardShowSrc>();
-
-        EnemyFold = new List<CardShowSrc>();
-        PlayerFold = new List<CardShowSrc>();
-    }
-
-
-    /// <summary>
-    /// выдает  стартовую колоду карт
-    /// </summary>
-    /// <returns></returns>
-    List<Card> GiveDeckCard()
-    {
-        List<Card> cards = new List<Card>();
-
-        for (int i = 0; i < DeckSize; i++)
-        {
-            cards.Add(CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)]);
-        }
-
-        return cards;
-    }
-}
-
 public class GameManagerSrc : MonoBehaviour
 {
     public Game CurrentGame;
@@ -101,30 +16,13 @@ public class GameManagerSrc : MonoBehaviour
     public TextMeshProUGUI TurnTimeText;
     public Button EndTurnButton;
 
-    private const int MaxManaPoolSize = 10;
-    private int _playerManaCounter = 0, _enemyManaCounter = 0;
-    public int PlayerManaCounter
-    {
-        get { return _playerManaCounter; }
-        set
-        {
-            if (value > 10) _playerManaCounter = 10;
-            else if (value < 0) _playerManaCounter = 0;
-            else _playerManaCounter = value;
-        }
-    }
-    public int EnemyManaCounter
-    {
-        get { return _enemyManaCounter; }
-        set
-        {
-            if (value > 10) _enemyManaCounter = 10;
-            else if (value < 0) _enemyManaCounter = 0;
-            else _enemyManaCounter = value;
-        }
-    }
+    public Transform EnemyManaBarTransform;
+    public Transform PlayerManaBarTransform;
 
-    public int PlayerMana = 0, EnemyMana = 0;
+
+    private ManaBar enemyManaBar;
+    private ManaBar playerManaBar;
+
 
     public Transform EnemyHPBarTransform;
     public Transform PlayerHPBarTransform;
@@ -143,16 +41,17 @@ public class GameManagerSrc : MonoBehaviour
         CurrentGame = new Game();
 
         StartCoroutine(TurnFunc());
-
-        PlayerHPBar = new HPBar(ref PlayerHPBarTransform);
-        EnemyHPBar = new HPBar(ref EnemyHPBarTransform);
-
-
+        PlayerHPBar = new HPBar(PlayerHPBarTransform);
+        EnemyHPBar = new HPBar(EnemyHPBarTransform);
+        playerManaBar = new ManaBar(PlayerManaBarTransform);
+        enemyManaBar = new ManaBar(EnemyManaBarTransform);
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
         PlayerHPBar.show();
         EnemyHPBar.show();
+        playerManaBar.FillManaBar();
+        enemyManaBar.show();
     }
 
     /// <summary>
@@ -310,8 +209,16 @@ public class GameManagerSrc : MonoBehaviour
         {
             GiveNewCards();
         }
-
+        FillManaBar(!IsPlayerTurn);
         StartCoroutine(TurnFunc());
+    }
+
+    public void FillManaBar(bool isEnemyTurn)
+    {
+        if (isEnemyTurn)
+            enemyManaBar.FillManaBar();
+        else
+            playerManaBar.FillManaBar();
     }
 
     /// <summary>

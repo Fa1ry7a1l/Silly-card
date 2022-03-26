@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPBar : MonoBehaviour
+public class HPBar
 {
     public const int MaxHP = 30;
     private int _curHP;
@@ -18,7 +18,7 @@ public class HPBar : MonoBehaviour
         } }
     private Transform Transform;
     List<Image> _gems;
-    public HPBar(ref Transform t)
+    public HPBar(Transform t)
     {
         Transform = t;
         CurrentHP = MaxHP;
