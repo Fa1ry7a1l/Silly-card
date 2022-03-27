@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManaBar
-{
+public class ManaBar:MonoBehaviour
+{ 
     public const int MaxMana = 10;
     private int _curMana;
     private int _manaPullSize;
@@ -24,18 +24,11 @@ public class ManaBar
             }
         }
     }
-    private Transform Transform;
-    List<Image> _gems;
-    public ManaBar(Transform t)
+    [SerializeField] private List<Image> _gems = new List<Image>();
+    private void Start()
     {
-        Transform = t;
         CurrentMana = 0;
         _manaPullSize = 0;
-        _gems = new List<Image>();
-        for (int i = 0; i < Transform.childCount; i++)
-        {
-            _gems.Add(Transform.GetChild(i).GetComponent<Image>());
-        }
     }
 
     public int AddMana(int addValue)
@@ -48,7 +41,7 @@ public class ManaBar
     public int ReduceMana(int reduceValue)
     {
         CurrentMana -= reduceValue;
-        this.show();
+        show();
         return CurrentMana;
     }
 
@@ -69,8 +62,7 @@ public class ManaBar
     {
         _manaPullSize += 1;
         CurrentMana = _manaPullSize;
-        Debug.Log($"{_manaPullSize} {CurrentMana}");
-        this.show();
+        show();
     }
 
 }

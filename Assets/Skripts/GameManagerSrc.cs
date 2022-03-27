@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class GameManagerSrc : MonoBehaviour
 {
+    [SerializeField] private Turn turn;
     public Game CurrentGame;
     public Transform EnemyHand, PlayerHand;
     public Transform EnemyField, PlayerField;
@@ -18,10 +19,6 @@ public class GameManagerSrc : MonoBehaviour
 
     public Transform EnemyManaBarTransform;
     public Transform PlayerManaBarTransform;
-
-
-    private ManaBar enemyManaBar;
-    private ManaBar playerManaBar;
 
 
     public Transform EnemyHPBarTransform;
@@ -38,20 +35,18 @@ public class GameManagerSrc : MonoBehaviour
     void Start()
     {
         Turn = 0;
-        CurrentGame = new Game();
 
-        StartCoroutine(TurnFunc());
         PlayerHPBar = new HPBar(PlayerHPBarTransform);
         EnemyHPBar = new HPBar(EnemyHPBarTransform);
-        playerManaBar = new ManaBar(PlayerManaBarTransform);
-        enemyManaBar = new ManaBar(EnemyManaBarTransform);
+        //playerManaBar = new ManaBar();
+        //enemyManaBar = new ManaBar();
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
         PlayerHPBar.show();
         EnemyHPBar.show();
-        playerManaBar.FillManaBar();
-        enemyManaBar.show();
+        //playerManaBar.FillManaBar();
+        //enemyManaBar.show();
     }
 
     /// <summary>
@@ -100,58 +95,7 @@ public class GameManagerSrc : MonoBehaviour
         get { return Turn % 2 == 0; }
     }
 
-    IEnumerator TurnFunc()
-    {
-        TurnTime = 30;
-        TurnTimeText.text = TurnTime.ToString();
-
-        foreach (var card in CurrentGame.PlayerField)
-        {
-            card.SelfCard.ChangeAttackState(false);
-            card.DeHighlightCard();
-        }
-        foreach (var card in CurrentGame.EnemyField)
-        {
-            card.SelfCard.ChangeAttackState(false);
-            card.SelfCard.ChangeAttackState(false);
-
-        }
-
-
-
-        if (IsPlayerTurn)
-        {
-            foreach (var card in CurrentGame.PlayerField)
-            {
-                card.SelfCard.ChangeAttackState(true);
-                card.HighlightCard();
-            }
-
-            while (TurnTime-- > 0)
-            {
-                TurnTimeText.text = TurnTime.ToString();
-                yield return new WaitForSeconds(1);
-            }
-
-            ChangeTurn();
-
-        }
-        else
-        {
-            foreach (var card in CurrentGame.EnemyField)
-            {
-                card.SelfCard.ChangeAttackState(true);
-            }
-
-            while (TurnTime-- > 27)
-            {
-                TurnTimeText.text = "Ход противника";
-                yield return new WaitForSeconds(1);
-            }
-            EnemyTurn();
-            ChangeTurn();
-        }
-    }
+   
 
     // todo реализуй
     void EnemyTurn()
@@ -204,22 +148,15 @@ public class GameManagerSrc : MonoBehaviour
         StopAllCoroutines();
 
         Turn++;
-        EndTurnButton.enabled = IsPlayerTurn;
+       
         if (IsPlayerTurn)
         {
             GiveNewCards();
         }
-        FillManaBar(!IsPlayerTurn);
-        StartCoroutine(TurnFunc());
+        turn.ChangeTurn();
     }
 
-    public void FillManaBar(bool isEnemyTurn)
-    {
-        if (isEnemyTurn)
-            enemyManaBar.FillManaBar();
-        else
-            playerManaBar.FillManaBar();
-    }
+
 
     /// <summary>
     /// Выдает каждому игроку по карте

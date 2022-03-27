@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPBar
+public class HPBar:MonoBehaviour
 {
     public const int MaxHP = 30;
     private int _curHP;

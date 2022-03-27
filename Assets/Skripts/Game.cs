@@ -6,7 +6,7 @@ using TMPro;
 using System;
 using Random = UnityEngine.Random;
 
-public class Game
+public class Game:MonoBehaviour
 {
     /// <summary>
     /// Размер изначальной колоды
@@ -58,7 +58,7 @@ public class Game
     /// </summary>
     public List<CardShowSrc> PlayerFold;
 
-    public Game()
+    private void Start()
     {
         EnemyDeck = GiveDeckCard();
         PlayerDeck = GiveDeckCard();
