@@ -69,6 +69,7 @@ public class GameManagerSrc : MonoBehaviour
     /// <param name="hand"></param>
     void GiveCardToHand(List<Card> deck, Transform handTransform)
     {
+        Console.WriteLine(deck.Count);
         if (deck.Count == 0)
             return;
         Card card = deck[0];

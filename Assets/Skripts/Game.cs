@@ -58,7 +58,7 @@ public class Game:MonoBehaviour
     /// </summary>
     public List<CardShowSrc> PlayerFold;
 
-    private void Start()
+    private void Awake()
     {
         EnemyDeck = GiveDeckCard();
         PlayerDeck = GiveDeckCard();
