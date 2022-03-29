@@ -8,7 +8,7 @@ public class CardShowSrc : MonoBehaviour
 {
     public Card SelfCard;
     public Image Logo, ElementLogo;
-    public TextMeshProUGUI Name, Attack, Defense;
+    public TextMeshProUGUI Name, Attack, Defense, ManaCost;
     public GameObject HideObj, HilightedObj;
 
     public void HideCardInfo(Card card)
@@ -48,6 +48,7 @@ public class CardShowSrc : MonoBehaviour
         Name.text = card.Name;
         Attack.text = card.Attack.ToString();
         Defense.text = card.Defense.ToString();
+        ManaCost.text = card.Manacost.ToString();
         HideObj.SetActive(false);
         HilightedObj.SetActive(false);
     }

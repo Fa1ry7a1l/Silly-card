@@ -1,95 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 using Random = UnityEngine.Random;
-
-public class Game
-{
-    /// <summary>
-    /// Размер изначальной колоды
-    /// </summary>
-    public const int DeckSize = 10;
-
-    public const int StartHandSize = 4;
-
-    public const int MaxFieldSize = 6;
-
-
-    /// <summary>
-    /// Колода противника
-    /// </summary>
-    public List<Card> EnemyDeck;
-
-    /// <summary>
-    /// Колода игрока
-    /// </summary>
-    public List<Card> PlayerDeck;
-
-    /// <summary>
-    /// Рука противника
-    /// </summary>
-    public List<CardShowSrc> EnemyHand;
-
-    /// <summary>
-    /// Рука игрока
-    /// </summary>
-    public List<CardShowSrc> PlayerHand;
-
-    /// <summary>
-    /// Поле противника
-    /// </summary>
-    public List<CardShowSrc> EnemyField;
-
-    /// <summary>
-    /// Поле игрока
-    /// </summary>
-    public List<CardShowSrc> PlayerField;
-
-    /// <summary>
-    /// Сброс противника
-    /// </summary>
-    public List<CardShowSrc> EnemyFold;
-
-    /// <summary>
-    /// Сброс игрока
-    /// </summary>
-    public List<CardShowSrc> PlayerFold;
-
-    public Game()
-    {
-        EnemyDeck = GiveDeckCard();
-        PlayerDeck = GiveDeckCard();
-
-        EnemyField = new List<CardShowSrc>();
-        PlayerField = new List<CardShowSrc>();
-
-        EnemyHand = new List<CardShowSrc>();
-        PlayerHand = new List<CardShowSrc>();
-
-        EnemyFold = new List<CardShowSrc>();
-        PlayerFold = new List<CardShowSrc>();
-    }
-
-
-    /// <summary>
-    /// выдает  стартовую колоду карт
-    /// </summary>
-    /// <returns></returns>
-    List<Card> GiveDeckCard()
-    {
-        List<Card> cards = new List<Card>();
-
-        for (int i = 0; i < DeckSize; i++)
-        {
-            cards.Add(CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)]);
-        }
-
-        return cards;
-    }
-}
 
 public class GameManagerSrc : MonoBehaviour
 {
@@ -97,21 +11,38 @@ public class GameManagerSrc : MonoBehaviour
     public Transform EnemyHand, PlayerHand;
     public Transform EnemyField, PlayerField;
     public GameObject CardPref;
-    int Turn, TurnTime = 30;
     public TextMeshProUGUI TurnTimeText;
     public Button EndTurnButton;
+
+    public Transform EnemyManaBarTransform;
+    public Transform PlayerManaBarTransform;
+
+
+    public Transform EnemyHPBarTransform;
+    public Transform PlayerHPBarTransform;
+
+
+    private HPBar EnemyHPBar;
+    private HPBar PlayerHPBar;
+
+    public GameObject ResultGO;
+    public TextMeshProUGUI ResultText;
 
     // Start is called before the first frame update
     void Start()
     {
-        Turn = 0;
-        CurrentGame = new Game();
 
-        StartCoroutine(TurnFunc());
-
-
+        PlayerHPBar = new HPBar(PlayerHPBarTransform);
+        EnemyHPBar = new HPBar(EnemyHPBarTransform);
+        //playerManaBar = new ManaBar();
+        //enemyManaBar = new ManaBar();
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
+
+        PlayerHPBar.show();
+        EnemyHPBar.show();
+        //playerManaBar.FillManaBar();
+        //enemyManaBar.show();
     }
 
     /// <summary>
@@ -134,6 +65,7 @@ public class GameManagerSrc : MonoBehaviour
     /// <param name="hand"></param>
     void GiveCardToHand(List<Card> deck, Transform handTransform)
     {
+        Console.WriteLine(deck.Count);
         if (deck.Count == 0)
             return;
         Card card = deck[0];
@@ -155,67 +87,13 @@ public class GameManagerSrc : MonoBehaviour
 
     }
 
-    public bool IsPlayerTurn
-    {
-        get { return Turn % 2 == 0; }
-    }
 
-    IEnumerator TurnFunc()
-    {
-        TurnTime = 30;
-        TurnTimeText.text = TurnTime.ToString();
-
-        foreach (var card in CurrentGame.PlayerField)
-        {
-            card.SelfCard.ChangeAttackState(false);
-            card.DeHighlightCard();
-        }
-        foreach (var card in CurrentGame.EnemyField)
-        {
-            card.SelfCard.ChangeAttackState(false);
-            card.SelfCard.ChangeAttackState(false);
-
-        }
-
-
-
-        if (IsPlayerTurn)
-        {
-            foreach(var card in CurrentGame.PlayerField)
-            {
-                card.SelfCard.ChangeAttackState(true);
-                card.HighlightCard();
-            }
-
-            while (TurnTime-- > 0)
-            {
-                TurnTimeText.text = TurnTime.ToString();
-                yield return new WaitForSeconds(1);
-            }
-            
-            ChangeTurn();
-
-        }
-        else
-        {
-            foreach (var card in CurrentGame.EnemyField)
-            {
-                card.SelfCard.ChangeAttackState(true);
-            }
-
-            while (TurnTime-- > 27)
-            {
-                TurnTimeText.text = "Ход противника";
-                yield return new WaitForSeconds(1);
-            }
-            EnemyTurn();
-            ChangeTurn();
-        }
-    }
+   
 
     // todo реализуй
     void EnemyTurn()
     {
+        //поправить для отправки карт на битву // todo
         if (CurrentGame.EnemyHand.Count > 0)
         {
             //количество, карт, которое нужно отправить на поле
@@ -231,7 +109,6 @@ public class GameManagerSrc : MonoBehaviour
         }
     }
 
-    //почему то она иногда кидает out of range
     Transform GetNextPosition(int pos)
     {
         if (pos < 0 || pos > Game.MaxFieldSize - CurrentGame.EnemyField.Count)
@@ -256,22 +133,6 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Изменение хода
-    /// </summary>
-    public void ChangeTurn()
-    {
-        StopAllCoroutines();
-
-        Turn++;
-        EndTurnButton.enabled = IsPlayerTurn;
-        if (IsPlayerTurn)
-        {
-            GiveNewCards();
-        }
-
-        StartCoroutine(TurnFunc());
-    }
 
     /// <summary>
     /// Выдает каждому игроку по карте
@@ -291,12 +152,12 @@ public class GameManagerSrc : MonoBehaviour
         card1.DeHighlightCard();
         card1.RafreshData();
         card2.RafreshData();
-        if(!card1.SelfCard.IsAlive)
+        if (!card1.SelfCard.IsAlive)
         {
             DestroyCard(card1);
         }
         if (!card2.SelfCard.IsAlive)
-        { 
+        {
             DestroyCard(card2);
         }
     }
@@ -333,6 +194,34 @@ public class GameManagerSrc : MonoBehaviour
 
         }
         Destroy(card.gameObject);
+    }
+
+    public void DamageHero(CardShowSrc card, bool isEnemyAttacked)
+    {
+        int res;
+        if (isEnemyAttacked)
+            res = EnemyHPBar.ReduceHP(card.SelfCard.Attack);
+        else
+            res = PlayerHPBar.ReduceHP(card.SelfCard.Attack);
+        card.DeHighlightCard();
+
+        if (res == 0)
+            CheckForResult();
+    }
+
+    void CheckForResult()
+    {
+        if (PlayerHPBar.CurrentHP == 0 || EnemyHPBar.CurrentHP == 0)
+        {
+            ResultGO.SetActive(true);
+            StopAllCoroutines();
+
+            if (PlayerHPBar.CurrentHP == 0)
+                ResultText.text = "Повезет в другой раз";
+            else
+                ResultText.text = "Победа!";
+
+        }
     }
 
 }
