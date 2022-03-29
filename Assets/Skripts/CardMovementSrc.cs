@@ -25,10 +25,9 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         DefaultParent = transform.parent;
         CardShowSrc card = transform.GetComponent<CardShowSrc>();
 
-        IsDraggable = (DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND ||
+        IsDraggable = Turn.instance.IsPlayerTurn && (DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND ||
             DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_FIELD
-            && transform.GetComponent<CardShowSrc>().SelfCard.CanAttack) &&
-            GameManager.IsPlayerTurn;
+            && transform.GetComponent<CardShowSrc>().SelfCard.CanAttack);
 
 
         if (!IsDraggable)

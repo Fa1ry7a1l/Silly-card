@@ -2,43 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : PlayerBase
 {
-    [SerializeField] private Game game;
-    [SerializeField] private Turn turn;
-    [SerializeField] private ManaBar mana;
-    void OnTurnStarted(bool isPlayerTurn)
+
+    void OnTurnStarted()
     {
-        if (!isPlayerTurn)
-        {
             foreach (var card in game.EnemyField)
             {
                 card.SelfCard.ChangeAttackState(true);
             }
             mana.FillManaBar();
-        }
         
     }
 
 
-    private void Start()
-    {
 
-    }
-
-    void OnTurnEnded(bool isPlayerTurn)
+    void OnTurnEnded()
     {
-        if (!isPlayerTurn)
-        {
+        
             foreach (var card in game.EnemyField)
             {
                 card.SelfCard.ChangeAttackState(false);
             }
-        }
     }
     private void Awake()
     {
-        turn.TurnStarted += OnTurnStarted;
-        turn.TurnEnded += OnTurnEnded;
+        turn.EnemyTurnStarted += OnTurnStarted;
+        turn.EnemyTurnEnded += OnTurnEnded;
     }
 }

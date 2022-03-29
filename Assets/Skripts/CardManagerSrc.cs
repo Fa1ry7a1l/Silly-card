@@ -13,12 +13,13 @@ public struct Card
     public Sprite Logo;
     public int Attack, Defense, Manacost;
     public Element Element;
+    public PlayerBase PlayerBase;
 
     public bool CanAttack;
 
     public bool IsAlive { get { return Defense > 0; } }
 
-    public Card(string Name, Element element, string logoPath, int attack, int defense, int manaCost, bool canAttack = false)
+    public Card(string Name, Element element, string logoPath, int attack, int defense, int manaCost, bool canAttack = false, PlayerBase PlayerBase = null)
     {
         this.Name = Name;
         Element = element;
@@ -27,6 +28,12 @@ public struct Card
         this.Defense = defense;
         this.CanAttack = canAttack;
         this.Manacost = manaCost;
+        this.PlayerBase = PlayerBase;
+    }
+
+    public bool TryPlay()
+    {
+        return PlayerBase.TryPlay(this);
     }
 
     public void ChangeAttackState(bool can)

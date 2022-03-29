@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192eaced34f3cdc45a544183ab567e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 5
+  turnTime: 20
   turnTimeText: {fileID: 1536015773}
 --- !u!4 &140076829
 Transform:
@@ -292,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   GameManager: {fileID: 519420033}
+  turn: {fileID: 140076828}
 --- !u!224 &189034679 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
@@ -1193,7 +1194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3dc0a8eec441a4e94474d950243b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turn: {fileID: 140076828}
   CurrentGame: {fileID: 1048584577}
   EnemyHand: {fileID: 553209641}
   PlayerHand: {fileID: 472356488}
@@ -1299,6 +1299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   GameManager: {fileID: 519420033}
+  turn: {fileID: 140076828}
 --- !u!1 &553209640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0b2d930000d78418b988eecffbf188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _curMana: 0
+  _manaPullSize: 0
   _gems:
   - {fileID: 378811312}
   - {fileID: 403153936}
@@ -2139,6 +2142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d92665918681f45942ce6774401b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 666213169}
+  enemy: {fileID: 0}
   EnemyHand: []
   PlayerHand: []
   EnemyField: []
@@ -4783,6 +4788,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0b2d930000d78418b988eecffbf188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _curMana: 0
+  _manaPullSize: 0
   _gems:
   - {fileID: 1171499960}
   - {fileID: 1315964782}

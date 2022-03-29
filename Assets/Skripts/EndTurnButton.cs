@@ -13,12 +13,17 @@ public class EndTurnButton : MonoBehaviour
     }
     private void Awake()
     {
-        turn.TurnStarted += SetActiveState;
+        turn.PlayerTurnStarted += Activate;
+        turn.PlayerTurnEnded += Deactivate;
     }
 
-    void SetActiveState(bool isPlayerTurn)
+    void Activate()
     {
-        button.enabled = isPlayerTurn;
+        button.enabled = true;
+    }
+    void Deactivate()
+    {
+        button.enabled = false;
     }
 
 }

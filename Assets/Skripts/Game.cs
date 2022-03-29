@@ -6,7 +6,7 @@ using TMPro;
 using System;
 using Random = UnityEngine.Random;
 
-public class Game:MonoBehaviour
+public class Game : MonoBehaviour
 {
     /// <summary>
     /// Размер изначальной колоды
@@ -16,6 +16,9 @@ public class Game:MonoBehaviour
     public const int StartHandSize = 4;
 
     public const int MaxFieldSize = 6;
+
+    [SerializeField] private Player player;
+    [SerializeField] private Enemy enemy;
 
 
     /// <summary>
@@ -60,8 +63,8 @@ public class Game:MonoBehaviour
 
     private void Awake()
     {
-        EnemyDeck = GiveDeckCard();
-        PlayerDeck = GiveDeckCard();
+        EnemyDeck = GiveDeckCard(false);
+        PlayerDeck = GiveDeckCard(true);
 
         EnemyField = new List<CardShowSrc>();
         PlayerField = new List<CardShowSrc>();
@@ -78,13 +81,15 @@ public class Game:MonoBehaviour
     /// выдает  стартовую колоду карт
     /// </summary>
     /// <returns></returns>
-    List<Card> GiveDeckCard()
+    List<Card> GiveDeckCard(bool isPlayer)
     {
         List<Card> cards = new List<Card>();
 
         for (int i = 0; i < DeckSize; i++)
         {
-            cards.Add(CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)]);
+            Card card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)];
+            card.PlayerBase = (isPlayer ? (PlayerBase)player : (PlayerBase)enemy);
+            cards.Add(card);
         }
 
         return cards;

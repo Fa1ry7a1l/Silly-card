@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class Turn : MonoBehaviour
 {
-    public event Action<bool> TurnEnded;
-    public event Action<bool> TurnStarted;
-    private bool isPlayerTurn = false;
+    public event Action PlayerTurnEnded;
+    public event Action PlayerTurnStarted;
+
+    public event Action EnemyTurnEnded;
+    public event Action EnemyTurnStarted;
+
+    public bool IsPlayerTurn { get; private set; } = false;
+    public static Turn instance;
     [SerializeField] private int turnTime;
     [SerializeField] private TMPro.TextMeshProUGUI turnTimeText;
     IEnumerator StartTimer()
@@ -26,7 +31,7 @@ public class Turn : MonoBehaviour
 
     private string GetTimerText(int time)
     {
-        if (isPlayerTurn)
+        if (IsPlayerTurn)
             return time.ToString();
         //Pyzyaka
         return "Ход противника";
@@ -35,14 +40,33 @@ public class Turn : MonoBehaviour
     public void ChangeTurn()
     {
         StopAllCoroutines();
-        TurnEnded?.Invoke(isPlayerTurn);
-        isPlayerTurn = !isPlayerTurn;
-        TurnStarted?.Invoke(isPlayerTurn);
+        if(IsPlayerTurn)
+        {
+            PlayerTurnEnded?.Invoke();
+        }
+        else
+        {
+            EnemyTurnEnded?.Invoke();
+        }
+        IsPlayerTurn = !IsPlayerTurn;
+        if (IsPlayerTurn)
+        {
+            PlayerTurnStarted?.Invoke();
+        }
+        else
+        {
+            EnemyTurnStarted?.Invoke();
+        }
         StartCoroutine(StartTimer());
     }
 
     private void Start()
     {
         ChangeTurn();
+    }
+
+    private void Awake()
+    {
+        instance = this;
     }
 }

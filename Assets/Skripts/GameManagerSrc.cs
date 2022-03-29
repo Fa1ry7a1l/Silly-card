@@ -1,19 +1,16 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 using Random = UnityEngine.Random;
 
 public class GameManagerSrc : MonoBehaviour
 {
-    [SerializeField] private Turn turn;
     public Game CurrentGame;
     public Transform EnemyHand, PlayerHand;
     public Transform EnemyField, PlayerField;
     public GameObject CardPref;
-    int Turn, TurnTime = 30;
     public TextMeshProUGUI TurnTimeText;
     public Button EndTurnButton;
 
@@ -34,7 +31,6 @@ public class GameManagerSrc : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Turn = 0;
 
         PlayerHPBar = new HPBar(PlayerHPBarTransform);
         EnemyHPBar = new HPBar(EnemyHPBarTransform);
@@ -91,10 +87,6 @@ public class GameManagerSrc : MonoBehaviour
 
     }
 
-    public bool IsPlayerTurn
-    {
-        get { return Turn % 2 == 0; }
-    }
 
    
 
@@ -138,23 +130,6 @@ public class GameManagerSrc : MonoBehaviour
         }
         throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count}) in for loop");
 
-    }
-
-
-    /// <summary>
-    /// Изменение хода
-    /// </summary>
-    public void ChangeTurn()
-    {
-        StopAllCoroutines();
-
-        Turn++;
-       
-        if (IsPlayerTurn)
-        {
-            GiveNewCards();
-        }
-        turn.ChangeTurn();
     }
 
 

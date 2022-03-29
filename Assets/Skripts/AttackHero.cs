@@ -13,10 +13,11 @@ public class AttackHero : MonoBehaviour, IDropHandler
 
     public HeroType Type;
     public GameManagerSrc GameManager;
+    public Turn turn;
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(!GameManager.IsPlayerTurn)
+        if(!turn.IsPlayerTurn)
         {
             return;
         }
