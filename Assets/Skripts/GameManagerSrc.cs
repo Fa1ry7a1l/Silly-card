@@ -21,10 +21,6 @@ public class GameManagerSrc : MonoBehaviour
     public Transform EnemyHPBarTransform;
     public Transform PlayerHPBarTransform;
 
-
-    private HPBar EnemyHPBar;
-    private HPBar PlayerHPBar;
-
     public GameObject ResultGO;
     public TextMeshProUGUI ResultText;
 
@@ -32,17 +28,9 @@ public class GameManagerSrc : MonoBehaviour
     void Start()
     {
 
-        PlayerHPBar = new HPBar(PlayerHPBarTransform);
-        EnemyHPBar = new HPBar(EnemyHPBarTransform);
-        //playerManaBar = new ManaBar();
-        //enemyManaBar = new ManaBar();
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
-        PlayerHPBar.show();
-        EnemyHPBar.show();
-        //playerManaBar.FillManaBar();
-        //enemyManaBar.show();
     }
 
     /// <summary>
@@ -196,19 +184,7 @@ public class GameManagerSrc : MonoBehaviour
         Destroy(card.gameObject);
     }
 
-    public void DamageHero(CardShowSrc card, bool isEnemyAttacked)
-    {
-        int res;
-        if (isEnemyAttacked)
-            res = EnemyHPBar.ReduceHP(card.SelfCard.Attack);
-        else
-            res = PlayerHPBar.ReduceHP(card.SelfCard.Attack);
-        card.DeHighlightCard();
-
-        if (res == 0)
-            CheckForResult();
-    }
-
+    /*
     void CheckForResult()
     {
         if (PlayerHPBar.CurrentHP == 0 || EnemyHPBar.CurrentHP == 0)
@@ -222,6 +198,6 @@ public class GameManagerSrc : MonoBehaviour
                 ResultText.text = "Победа!";
 
         }
-    }
+    }*/
 
 }

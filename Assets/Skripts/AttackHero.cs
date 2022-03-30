@@ -11,6 +11,8 @@ public class AttackHero : MonoBehaviour, IDropHandler
         ENEMY, PLAYER
     }
 
+    [SerializeField] private PlayerBase m_Player;
+
     public HeroType Type;
     public GameManagerSrc GameManager;
     public Turn turn;
@@ -28,7 +30,8 @@ public class AttackHero : MonoBehaviour, IDropHandler
         if(cardShowSrc != null && cardShowSrc.SelfCard.CanAttack)
         {
             cardShowSrc.SelfCard.CanAttack = false;
-            GameManager.DamageHero(cardShowSrc, Type == HeroType.ENEMY);
+            cardShowSrc.DeHighlightCard();
+            m_Player.Damage(cardShowSrc.SelfCard.Attack);
         }
     }
 }

@@ -35,18 +35,18 @@ public class ManaBar : MonoBehaviour
     public int AddMana(int addValue)
     {
         CurrentMana += addValue;
-        this.show();
+        this.Show();
         return CurrentMana;
     }
 
     public int ReduceMana(int reduceValue)
     {
         CurrentMana -= reduceValue;
-        show();
+        Show();
         return CurrentMana;
     }
 
-    public void show()
+    public void Show()
     {
         int counter = 0;
         for (; counter < CurrentMana; counter++)
@@ -63,7 +63,7 @@ public class ManaBar : MonoBehaviour
     {
         _manaPullSize += 1;
         CurrentMana = _manaPullSize;
-        show();
+        Show();
     }
 
 }

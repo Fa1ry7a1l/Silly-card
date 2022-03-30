@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Enemy : PlayerBase
+public class Enemy : PlayerBase 
 {
 
     void OnTurnStarted()
@@ -25,6 +26,7 @@ public class Enemy : PlayerBase
                 card.SelfCard.ChangeAttackState(false);
             }
     }
+
     private void Awake()
     {
         turn.EnemyTurnStarted += OnTurnStarted;
