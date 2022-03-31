@@ -9,24 +9,19 @@ public class GameManagerSrc : MonoBehaviour
 {
     public Game CurrentGame;
     public Transform EnemyHand, PlayerHand;
-    public Transform EnemyField, PlayerField;
+    //public Transform EnemyField, PlayerField;
     public GameObject CardPref;
-    public TextMeshProUGUI TurnTimeText;
-    public Button EndTurnButton;
 
-    public Transform EnemyManaBarTransform;
-    public Transform PlayerManaBarTransform;
-
-
-    public Transform EnemyHPBarTransform;
-    public Transform PlayerHPBarTransform;
 
     public GameObject ResultGO;
     public TextMeshProUGUI ResultText;
 
+    [SerializeField]    private PlayerBase Player, Enemy;
+
     // Start is called before the first frame update
     void Start()
     {
+
 
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
@@ -38,7 +33,7 @@ public class GameManagerSrc : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <param name="hand"></param>
-    void GiveHandCards(List<Card> deck, Transform handTransform)
+    void GiveHandCards(List<CardModelBase> deck, Transform handTransform)
     {
         for (int i = 0; i < Game.StartHandSize; i++)
         {
@@ -51,24 +46,28 @@ public class GameManagerSrc : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <param name="hand"></param>
-    void GiveCardToHand(List<Card> deck, Transform handTransform)
+    void GiveCardToHand(List<CardModelBase> deck, Transform handTransform)
     {
-        Console.WriteLine(deck.Count);
+
         if (deck.Count == 0)
             return;
-        Card card = deck[0];
+        CardModelBase card = deck[0];
         deck.Remove(card);
 
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
+        CardBase cb = CardGo.GetComponent<CardBase>();
+        cb.Init(card);
         if (handTransform == EnemyHand)
         {
-            CardGo.GetComponent<CardShowSrc>().HideCardInfo(card);
-            CurrentGame.EnemyHand.Add(CardGo.GetComponent<CardShowSrc>());
+            cb.PlayerBase = Enemy;
+            CardGo.GetComponent<CardShowSrc>().HideCardInfo();
+            CurrentGame.EnemyHand.Add(cb);
         }
         else
         {
-            CardGo.GetComponent<CardShowSrc>().ShowCardInfo(card);
-            CurrentGame.PlayerHand.Add(CardGo.GetComponent<CardShowSrc>());
+            cb.PlayerBase = Player;
+
+            CurrentGame.PlayerHand.Add(cb);
             CardGo.GetComponent<AttackedCard>().enabled = false;
 
         }
@@ -76,49 +75,49 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
-   
+
 
     // todo реализуй
-    void EnemyTurn()
-    {
-        //поправить дл€ отправки карт на битву // todo
-        if (CurrentGame.EnemyHand.Count > 0)
-        {
-            //количество, карт, которое нужно отправить на поле
-            int count = Random.Range(0, CurrentGame.EnemyHand.Count + 1);
-            for (int i = 0, counter = 0; counter < count && CurrentGame.EnemyField.Count < Game.MaxFieldSize; counter++)
-            {
-                CurrentGame.EnemyHand[i].ShowCardInfo(CurrentGame.EnemyHand[i].SelfCard);
-                CurrentGame.EnemyHand[i].transform.SetParent(GetNextPosition(Random.Range(0, Game.MaxFieldSize - CurrentGame.EnemyField.Count)));
+    //void EnemyTurn()
+    //{
+    //    //поправить дл€ отправки карт на битву // todo
+    //    if (CurrentGame.EnemyHand.Count > 0)
+    //    {
+    //        //количество, карт, которое нужно отправить на поле
+    //        int count = Random.Range(0, CurrentGame.EnemyHand.Count + 1);
+    //        for (int i = 0, counter = 0; counter < count && CurrentGame.EnemyField.Count < Game.MaxFieldSize; counter++)
+    //        {
+    //            CurrentGame.EnemyHand[i].ShowCardInfo(CurrentGame.EnemyHand[i].SelfCard);
+    //            CurrentGame.EnemyHand[i].transform.SetParent(GetNextPosition(Random.Range(0, Game.MaxFieldSize - CurrentGame.EnemyField.Count)));
 
-                CurrentGame.EnemyField.Add(CurrentGame.EnemyHand[i]);
-                CurrentGame.EnemyHand.Remove(CurrentGame.EnemyHand[i]);
-            }
-        }
-    }
+    //            CurrentGame.EnemyField.Add(CurrentGame.EnemyHand[i]);
+    //            CurrentGame.EnemyHand.Remove(CurrentGame.EnemyHand[i]);
+    //        }
+    //    }
+    //}
 
-    Transform GetNextPosition(int pos)
-    {
-        if (pos < 0 || pos > Game.MaxFieldSize - CurrentGame.EnemyField.Count)
-        {
-            throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count})");
-        }
-        pos++;
-        int counter = 0;
-        for (int i = 0; i < EnemyField.childCount; i++)
-        {
-            if (counter == pos && EnemyField.GetChild(i).childCount == 0)
-                return EnemyField.GetChild(i);
+    //Transform GetNextPosition(int pos)
+    //{
+    //    if (pos < 0 || pos > Game.MaxFieldSize - CurrentGame.EnemyField.Count)
+    //    {
+    //        throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count})");
+    //    }
+    //    pos++;
+    //    int counter = 0;
+    //    for (int i = 0; i < EnemyField.childCount; i++)
+    //    {
+    //        if (counter == pos && EnemyField.GetChild(i).childCount == 0)
+    //            return EnemyField.GetChild(i);
 
-            if (EnemyField.GetChild(i).childCount == 0)
-                counter++;
-            if (counter == pos && EnemyField.GetChild(i).childCount == 0)
-                return EnemyField.GetChild(i);
+    //        if (EnemyField.GetChild(i).childCount == 0)
+    //            counter++;
+    //        if (counter == pos && EnemyField.GetChild(i).childCount == 0)
+    //            return EnemyField.GetChild(i);
 
-        }
-        throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count}) in for loop");
+    //    }
+    //    throw new ArgumentException($"cant get position for {pos} in range [0,{Game.MaxFieldSize - CurrentGame.EnemyField.Count}) in for loop");
 
-    }
+    //}
 
 
 
@@ -132,29 +131,34 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
-    public void CardsFidht(CardShowSrc card1, CardShowSrc card2)
+    public void CardsFidht(CardBase card1, CardBase card2)
     {
-        card1.SelfCard.GetDamage(card2.SelfCard.Attack);
-        card2.SelfCard.GetDamage(card1.SelfCard.Attack);
+        if(card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
+        {
+            uc1.GetDamage(uc2.Attack);
+            uc2.GetDamage(uc1.Attack);
 
-        card1.DeHighlightCard();
-        card1.RafreshData();
-        card2.RafreshData();
-        if (!card1.SelfCard.IsAlive)
-        {
-            DestroyCard(card1);
+            card1.CardShow.DeHighlightCard();
+            card1.CardShow.RefreshData(uc1);
+            card2.CardShow.RefreshData(uc2);
+            if (!uc1.IsAlive)
+            {
+                DestroyCard(card1);
+            }
+            if (!uc2.IsAlive)
+            {
+                DestroyCard(card2);
+            }
         }
-        if (!card2.SelfCard.IsAlive)
-        {
-            DestroyCard(card2);
-        }
+
+        
     }
 
     /// <summary>
     /// ”ничтожает карту
     /// </summary>
     /// <param name="card"></param>
-    public void DestroyCard(CardShowSrc card)
+    public void DestroyCard(CardBase card)
     {
         card.GetComponent<CardMovementSrc>().OnEndDrag(null);
 

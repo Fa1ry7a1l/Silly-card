@@ -18,7 +18,7 @@ public class PlayerBase : MonoBehaviour, IDropHandler
     public event Action<int,int> OnHeal; //сколько восстановили и новое значение hp
 
 
-    public bool TryPlay(Card card)
+    public bool TryPlay(CardModelBase card)
     {
         if(mana.CurrentMana >= card.Manacost)
         {
@@ -42,19 +42,19 @@ public class PlayerBase : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (!turn.IsPlayerTurn)
-        {
-            return;
-        }
+        //if (!turn.IsPlayerTurn)
+        //{
+        //    return;
+        //}
 
-        CardShowSrc cardShowSrc = eventData.pointerDrag.GetComponent<CardShowSrc>();
+        //CardBase cardBase = eventData.pointerDrag.GetComponent<CardBase>();
 
 
-        if (cardShowSrc != null && cardShowSrc.SelfCard.CanAttack)
-        {
-            cardShowSrc.SelfCard.CanAttack = false;
-            cardShowSrc.DeHighlightCard();
-            this.Damage(cardShowSrc.SelfCard.Attack);
-        }
+        //if (cardBase != null && cardBase.CardModel.CanAttack)
+        //{
+        //    cardBase.CardModel.CanAttack = false;
+        //    cardBase.DeHighlightCard();
+        //    this.Damage(cardBase.SelfCard.Attack);
+        //}
     }
 }

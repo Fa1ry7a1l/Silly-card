@@ -184,7 +184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140076827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1342.2828, y: 703.3176, z: -447.20297}
+  m_LocalPosition: {x: 1342.2828, y: 703.3176, z: 2037.203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1271,17 +1271,11 @@ MonoBehaviour:
   CurrentGame: {fileID: 1048584577}
   EnemyHand: {fileID: 553209641}
   PlayerHand: {fileID: 472356488}
-  EnemyField: {fileID: 1322072690}
-  PlayerField: {fileID: 490336771}
   CardPref: {fileID: 195697604704514484, guid: adf8faf93f8dfd849bd01c4f97e45b48, type: 3}
-  TurnTimeText: {fileID: 1536015773}
-  EndTurnButton: {fileID: 1916910636}
-  EnemyManaBarTransform: {fileID: 1295720793}
-  PlayerManaBarTransform: {fileID: 189034679}
-  EnemyHPBarTransform: {fileID: 588203999}
-  PlayerHPBarTransform: {fileID: 1446250620}
   ResultGO: {fileID: 1101741926}
   ResultText: {fileID: 2059505283}
+  Player: {fileID: 552923640}
+  Enemy: {fileID: 148099071}
 --- !u!1 &552923635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4011,6 +4005,7 @@ GameObject:
   - component: {fileID: 1492131134}
   - component: {fileID: 1492131133}
   - component: {fileID: 1492131136}
+  - component: {fileID: 1492131137}
   m_Layer: 5
   m_Name: OurField
   m_TagString: Untagged
@@ -4114,6 +4109,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!61 &1492131137
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492131131}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 450, y: 450}
+  m_EdgeRadius: 0
 --- !u!1 &1536015771
 GameObject:
   m_ObjectHideFlags: 0

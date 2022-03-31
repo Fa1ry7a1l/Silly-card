@@ -24,56 +24,56 @@ public class Game : MonoBehaviour
     /// <summary>
     /// Колода противника
     /// </summary>
-    public List<Card> EnemyDeck;
+    public List<CardModelBase> EnemyDeck;
 
     /// <summary>
     /// Колода игрока
     /// </summary>
-    public List<Card> PlayerDeck;
+    public List<CardModelBase> PlayerDeck;
 
     /// <summary>
     /// Рука противника
     /// </summary>
-    public List<CardShowSrc> EnemyHand;
+    public List<CardBase> EnemyHand;
 
     /// <summary>
     /// Рука игрока
     /// </summary>
-    public List<CardShowSrc> PlayerHand;
+    public List<CardBase> PlayerHand;
 
     /// <summary>
     /// Поле противника
     /// </summary>
-    public List<CardShowSrc> EnemyField;
+    public List<CardBase> EnemyField;
 
     /// <summary>
     /// Поле игрока
     /// </summary>
-    public List<CardShowSrc> PlayerField;
+    public List<CardBase> PlayerField;
 
     /// <summary>
     /// Сброс противника
     /// </summary>
-    public List<CardShowSrc> EnemyFold;
+    public List<CardBase> EnemyFold;
 
     /// <summary>
     /// Сброс игрока
     /// </summary>
-    public List<CardShowSrc> PlayerFold;
+    public List<CardBase> PlayerFold;
 
     private void Awake()
     {
         EnemyDeck = GiveDeckCard(false);
         PlayerDeck = GiveDeckCard(true);
 
-        EnemyField = new List<CardShowSrc>();
-        PlayerField = new List<CardShowSrc>();
+        EnemyField = new List<CardBase>();
+        PlayerField = new List<CardBase>();
 
-        EnemyHand = new List<CardShowSrc>();
-        PlayerHand = new List<CardShowSrc>();
+        EnemyHand = new List<CardBase>();
+        PlayerHand = new List<CardBase>();
 
-        EnemyFold = new List<CardShowSrc>();
-        PlayerFold = new List<CardShowSrc>();
+        EnemyFold = new List<CardBase>();
+        PlayerFold = new List<CardBase>();
     }
 
 
@@ -81,14 +81,13 @@ public class Game : MonoBehaviour
     /// выдает  стартовую колоду карт
     /// </summary>
     /// <returns></returns>
-    List<Card> GiveDeckCard(bool isPlayer)
+    List<CardModelBase> GiveDeckCard(bool isPlayer)
     {
-        List<Card> cards = new List<Card>();
+        List<CardModelBase> cards = new List<CardModelBase>();
 
         for (int i = 0; i < DeckSize; i++)
         {
-            Card card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)];
-            card.PlayerBase = (isPlayer ? (PlayerBase)player : (PlayerBase)enemy);
+            var card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)];
             cards.Add(card);
         }
 

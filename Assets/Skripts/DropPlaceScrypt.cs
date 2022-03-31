@@ -11,19 +11,17 @@ public enum FieldType
     ENEMY_HAND
 }
 
-public class DropPlaceScrypt : MonoBehaviour, IDropHandler, IPointerEnterHandler
+public class DropPlaceScrypt : MonoBehaviour, IDropHandler/*/*IPointerEnterHandler*/
 {
     public FieldType Type;
     public void OnDrop(PointerEventData eventData)
     {
-
-
-        if (Type != FieldType.SELF_FIELD || eventData.pointerDrag.GetComponent<CardMovementSrc>().DefaultParent.GetComponent<DropPlaceScrypt>().Type == Type)
+        if (Type != FieldType.SELF_FIELD || eventData.pointerDrag.GetComponent<CardMovementSrc>().DropPlace.Type == Type)
             return;
 
         if (transform.childCount != 0)
         {
-            CardShowSrc card1 = transform.GetChild(0).GetComponent<CardShowSrc>();
+           var card1 = transform.GetChild(0).GetComponent<CardBase>();
             FindObjectOfType<GameManagerSrc>().DestroyCard(card1);
         }
 
@@ -32,23 +30,21 @@ public class DropPlaceScrypt : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         if (card)
         {
-            Card curCard = eventData.pointerDrag.GetComponent<CardShowSrc>().SelfCard;
+            CardBase curCard = eventData.pointerDrag.GetComponent<CardBase>();
             if (curCard.TryPlay())
             {
-
-
-                card.GameManager.CurrentGame.PlayerHand.Remove(card.GetComponent<CardShowSrc>());
-                card.GameManager.CurrentGame.PlayerField.Add(card.GetComponent<CardShowSrc>());
-                card.DefaultParent = transform;
+                card.GameManager.CurrentGame.PlayerHand.Remove(curCard);
+                card.GameManager.CurrentGame.PlayerField.Add(curCard);
+                card.DropPlace = this;
             }
 
         }
     }
 
-    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-    {
-        if (eventData.pointerDrag == null || Type == FieldType.ENEMY_FIELD || Type == FieldType.ENEMY_HAND || Type == FieldType.SELF_HAND)
-            return;
+    //void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    //{
+    //    if (eventData.pointerDrag == null || Type == FieldType.ENEMY_FIELD || Type == FieldType.ENEMY_HAND || Type == FieldType.SELF_HAND)
+    //        return;
 
-    }
+    //}
 }

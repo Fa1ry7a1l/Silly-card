@@ -7,9 +7,10 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     Camera MainCamera;
     Vector3 offset;
-    public GameManagerSrc GameManager;
-    public Transform DefaultParent;
-    public bool IsDraggable;
+    [HideInInspector] public GameManagerSrc GameManager;
+    [HideInInspector] public DropPlaceScrypt DropPlace;
+    [SerializeField] private CardBase CardShow;
+    private bool IsDraggable;
 
     void Awake()
     {
@@ -22,18 +23,19 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         offset = transform.position - MainCamera.ScreenToWorldPoint(eventData.position);
         offset.z = 0;
 
-        DefaultParent = transform.parent;
-        CardShowSrc card = transform.GetComponent<CardShowSrc>();
+        DropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
 
-        IsDraggable = Turn.instance.IsPlayerTurn && (DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_HAND ||
-            DefaultParent.GetComponent<DropPlaceScrypt>().Type == FieldType.SELF_FIELD
-            && transform.GetComponent<CardShowSrc>().SelfCard.CanAttack);
+
+
+        IsDraggable = Turn.instance.IsPlayerTurn && (DropPlace.Type == FieldType.SELF_HAND ||
+            DropPlace.Type == FieldType.SELF_FIELD
+            && (CardShow.CardModel as UnitCard).CanAttack);
 
 
         if (!IsDraggable)
             return;
 
-        transform.SetParent(DefaultParent.parent);
+        transform.SetParent(transform.parent.parent);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
@@ -55,9 +57,19 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (!IsDraggable)
             return;
 
+        var a = eventData.pointerDrag.GetComponent<CardBase>();
 
+        switch (a.CardModel)
+        {
+            case UnitCard b:
 
-        transform.SetParent(DefaultParent);
+                break;
+
+        }
+
+        //eventData.pointerDrag.GetComponent<>().
+
+        transform.SetParent(DropPlace.transform);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
     }

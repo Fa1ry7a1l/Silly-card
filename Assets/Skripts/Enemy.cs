@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Enemy : PlayerBase 
+public class Enemy : PlayerBase
 {
 
     void OnTurnStarted()
     {
-            foreach (var card in game.EnemyField)
-            {
-                card.SelfCard.ChangeAttackState(true);
-            }
-            mana.FillManaBar();
-        
+        foreach (var card in game.EnemyField)
+        {
+            (card.CardModel as UnitCard).ChangeAttackState(true);
+        }
+        mana.FillManaBar();
+
     }
 
 
 
     void OnTurnEnded()
     {
-        
-            foreach (var card in game.EnemyField)
-            {
-                card.SelfCard.ChangeAttackState(false);
-            }
+
+        foreach (var card in game.EnemyField)
+        {
+            (card.CardModel as UnitCard).ChangeAttackState(false);
+        }
     }
 
     private void Awake()

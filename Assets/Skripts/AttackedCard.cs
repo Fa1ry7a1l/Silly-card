@@ -7,7 +7,7 @@ public class AttackedCard : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        CardShowSrc card = eventData.pointerDrag.GetComponent<CardShowSrc>();
+        /*CardShowSrc card = eventData.pointerDrag.GetComponent<CardShowSrc>();
 
         if(card != null && 
             card.SelfCard.CanAttack&&
@@ -15,6 +15,6 @@ public class AttackedCard : MonoBehaviour, IDropHandler
         {
             card.SelfCard.ChangeAttackState(false);
             FindObjectOfType<GameManagerSrc>().CardsFidht(card, GetComponent<CardShowSrc>());
-        }
+        }*/
     }
 }
