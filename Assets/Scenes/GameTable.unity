@@ -213,7 +213,8 @@ GameObject:
   - component: {fileID: 148099070}
   - component: {fileID: 148099069}
   - component: {fileID: 148099071}
-  m_Layer: 5
+  - component: {fileID: 148099072}
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -88.29161, y: 544.25}
+  m_AnchoredPosition: {x: -95, y: 561}
   m_SizeDelta: {x: 238.1465, y: 240.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &148099069
@@ -294,6 +295,19 @@ MonoBehaviour:
   turn: {fileID: 140076828}
   mana: {fileID: 556500480}
   hp: {fileID: 274212552}
+--- !u!65 &148099072
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148099067}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300, y: 270, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &184682723 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1435069189083352214, guid: 1e9c39e0410632e409d0cc2a9c7089f9, type: 3}
@@ -321,7 +335,7 @@ GameObject:
   - component: {fileID: 218707147}
   - component: {fileID: 218707149}
   - component: {fileID: 218707148}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +462,7 @@ GameObject:
   - component: {fileID: 274707929}
   - component: {fileID: 274707928}
   - component: {fileID: 274707927}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,7 +600,8 @@ GameObject:
   - component: {fileID: 422499457}
   - component: {fileID: 422499456}
   - component: {fileID: 422499459}
-  m_Layer: 5
+  - component: {fileID: 422499460}
+  m_Layer: 9
   m_Name: EnemyField (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,6 +704,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!65 &422499460
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422499454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &440207185
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +730,8 @@ GameObject:
   - component: {fileID: 440207188}
   - component: {fileID: 440207187}
   - component: {fileID: 440207190}
-  m_Layer: 5
+  - component: {fileID: 440207191}
+  m_Layer: 9
   m_Name: EnemyField (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,6 +834,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!65 &440207191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440207185}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &455178099 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8842866216739217071, guid: 1e9c39e0410632e409d0cc2a9c7089f9, type: 3}
@@ -977,7 +1019,7 @@ GameObject:
   - component: {fileID: 490336774}
   - component: {fileID: 490336773}
   - component: {fileID: 490336772}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PlayerField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1084,7 +1126,7 @@ GameObject:
   - component: {fileID: 495480169}
   - component: {fileID: 495480171}
   - component: {fileID: 495480170}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1288,7 +1330,8 @@ GameObject:
   - component: {fileID: 552923638}
   - component: {fileID: 552923637}
   - component: {fileID: 552923640}
-  m_Layer: 5
+  - component: {fileID: 552923639}
+  m_Layer: 8
   m_Name: Hero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1353,6 +1396,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552923635}
   m_CullTransparentMesh: 1
+--- !u!65 &552923639
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552923635}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300, y: 270, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &552923640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2084,7 +2140,8 @@ GameObject:
   - component: {fileID: 926897995}
   - component: {fileID: 926897994}
   - component: {fileID: 926897997}
-  m_Layer: 5
+  - component: {fileID: 926897998}
+  m_Layer: 9
   m_Name: EnemyField (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2187,6 +2244,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!65 &926897998
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926897992}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &981745060 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6030258577570625837, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
@@ -2382,7 +2452,8 @@ GameObject:
   - component: {fileID: 1192556433}
   - component: {fileID: 1192556432}
   - component: {fileID: 1192556435}
-  m_Layer: 5
+  - component: {fileID: 1192556436}
+  m_Layer: 9
   m_Name: OurField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2485,6 +2556,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!65 &1192556436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192556430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1214475469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,7 +2582,8 @@ GameObject:
   - component: {fileID: 1214475472}
   - component: {fileID: 1214475471}
   - component: {fileID: 1214475474}
-  m_Layer: 5
+  - component: {fileID: 1214475475}
+  m_Layer: 9
   m_Name: OurField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2601,6 +2686,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!65 &1214475475
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214475469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1238789690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,7 +2712,8 @@ GameObject:
   - component: {fileID: 1238789693}
   - component: {fileID: 1238789692}
   - component: {fileID: 1238789695}
-  m_Layer: 5
+  - component: {fileID: 1238789696}
+  m_Layer: 9
   m_Name: EnemyField (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2717,6 +2816,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!65 &1238789696
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238789690}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1249112982 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8842866215129526647, guid: 1e9c39e0410632e409d0cc2a9c7089f9, type: 3}
@@ -3078,7 +3190,8 @@ GameObject:
   - component: {fileID: 1289600790}
   - component: {fileID: 1289600789}
   - component: {fileID: 1289600792}
-  m_Layer: 5
+  - component: {fileID: 1289600793}
+  m_Layer: 9
   m_Name: EnemyField (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3181,6 +3294,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!65 &1289600793
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289600787}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!224 &1295720793 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4871639241534644062, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
@@ -3220,7 +3346,7 @@ GameObject:
   - component: {fileID: 1322072693}
   - component: {fileID: 1322072692}
   - component: {fileID: 1322072691}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: EnemyField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4006,7 +4132,7 @@ GameObject:
   - component: {fileID: 1492131133}
   - component: {fileID: 1492131136}
   - component: {fileID: 1492131137}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: OurField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4109,32 +4235,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
---- !u!61 &1492131137
-BoxCollider2D:
+--- !u!65 &1492131137
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492131131}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 450, y: 450}
-  m_EdgeRadius: 0
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1536015771
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,7 +4582,8 @@ GameObject:
   - component: {fileID: 1743320726}
   - component: {fileID: 1743320728}
   - component: {fileID: 1743320727}
-  m_Layer: 5
+  - component: {fileID: 1743320729}
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4504,7 +4618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 0.00006485}
+  m_AnchoredPosition: {x: -0.00010014, y: -0.000056946}
   m_SizeDelta: {x: 2560, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1743320727
@@ -4545,6 +4659,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743320725}
   m_CullTransparentMesh: 1
+--- !u!65 &1743320729
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743320725}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2560, y: 1440, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1751394241
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,7 +4685,8 @@ GameObject:
   - component: {fileID: 1751394244}
   - component: {fileID: 1751394243}
   - component: {fileID: 1751394246}
-  m_Layer: 5
+  - component: {fileID: 1751394247}
+  m_Layer: 9
   m_Name: OurField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4661,6 +4789,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!65 &1751394247
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751394241}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1757814012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4258890961506134024, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
@@ -4696,7 +4837,8 @@ GameObject:
   - component: {fileID: 1888878871}
   - component: {fileID: 1888878870}
   - component: {fileID: 1888878873}
-  m_Layer: 5
+  - component: {fileID: 1888878874}
+  m_Layer: 9
   m_Name: OurField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4799,6 +4941,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!65 &1888878874
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888878868}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1898683000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2078191567650134690, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
@@ -5001,7 +5156,8 @@ GameObject:
   - component: {fileID: 2045372011}
   - component: {fileID: 2045372010}
   - component: {fileID: 2045372013}
-  m_Layer: 5
+  - component: {fileID: 2045372014}
+  m_Layer: 9
   m_Name: OurField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5104,6 +5260,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
+--- !u!65 &2045372014
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045372008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2047531472
 GameObject:
   m_ObjectHideFlags: 0
@@ -5117,7 +5286,8 @@ GameObject:
   - component: {fileID: 2047531475}
   - component: {fileID: 2047531474}
   - component: {fileID: 2047531477}
-  m_Layer: 5
+  - component: {fileID: 2047531478}
+  m_Layer: 9
   m_Name: EnemyField (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5220,6 +5390,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!65 &2047531478
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047531472}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 450, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2059505281
 GameObject:
   m_ObjectHideFlags: 0

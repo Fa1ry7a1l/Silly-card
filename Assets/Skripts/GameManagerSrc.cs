@@ -57,6 +57,7 @@ public class GameManagerSrc : MonoBehaviour
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
         CardBase cb = CardGo.GetComponent<CardBase>();
         cb.Init(card);
+        CardGo.layer = 2;
         if (handTransform == EnemyHand)
         {
             cb.PlayerBase = Enemy;

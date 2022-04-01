@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerBase : MonoBehaviour, IDropHandler
+public class PlayerBase : DropPlaceBase
 {
 
-    [SerializeField] protected Game game;
+    [SerializeField] public Game game;
     [SerializeField] protected Turn turn;
     [SerializeField] protected ManaBar mana;
     [SerializeField] protected HPBar hp;
@@ -40,21 +40,23 @@ public class PlayerBase : MonoBehaviour, IDropHandler
         OnHeal?.Invoke(heal, hp.CurrentHP);
     }
 
-    public void OnDrop(PointerEventData eventData)
+   
+
+    public override void MyOnDrop(CardBase cardBase)
     {
-        //if (!turn.IsPlayerTurn)
-        //{
-        //    return;
-        //}
+        if (!turn.IsPlayerTurn)
+        {
+            return;
+        }
 
-        //CardBase cardBase = eventData.pointerDrag.GetComponent<CardBase>();
-
-
-        //if (cardBase != null && cardBase.CardModel.CanAttack)
-        //{
-        //    cardBase.CardModel.CanAttack = false;
-        //    cardBase.DeHighlightCard();
-        //    this.Damage(cardBase.SelfCard.Attack);
-        //}
+        if (cardBase.CardModel is UnitCard uc)
+        {
+            if (uc.CanAttack)
+            {
+                uc.CanAttack = false;
+                cardBase.CardShow.DeHighlightCard();
+                this.Damage(uc.Attack);
+            }
+        }
     }
 }
