@@ -54,15 +54,18 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Vector3 newPos = MainCamera.ScreenToWorldPoint(eventData.position);
-        newPos.z = 0;
-        transform.position = newPos;
+
 
 
         if (!IsDraggable)
+        {
+            Vector3 nPos = MainCamera.ScreenToWorldPoint(eventData.position);
+            nPos.z = 0;
+            transform.position = nPos;
             return;
+        }
 
-        var a = eventData.pointerDrag.GetComponent<CardBase>();
+        var a = CardShow;
 
         
 
@@ -108,6 +111,12 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         }
 
+        if (eventData != null)
+        {
+            Vector3 newPos = MainCamera.ScreenToWorldPoint(eventData.position);
+            newPos.z = 0;
+            transform.position = newPos;
+        }
     }
 
 }
