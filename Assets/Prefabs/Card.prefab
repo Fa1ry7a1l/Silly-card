@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 153756075573121201}
   - component: {fileID: 195697604704514488}
   - component: {fileID: 195697604704514491}
-  - component: {fileID: 4691759642111645646}
+  - component: {fileID: 9149150499490208930}
   - component: {fileID: 4533054830183647233}
   m_Layer: 8
   m_Name: Card
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
   DropPlace: {fileID: 0}
-  CardShow: {fileID: 4691759642111645646}
+  CardShow: {fileID: 9149150499490208930}
 --- !u!225 &195697604704514491
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -356,7 +356,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &4691759642111645646
+--- !u!114 &9149150499490208930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -365,9 +365,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 195697604704514484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cbe29dab01b23447a2abb2d455d5a0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c2198fce5249b842a92fead28ece6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: 0
   CardShow: {fileID: 153756075573121201}
   PlayerBase: {fileID: 0}
 --- !u!65 &4533054830183647233

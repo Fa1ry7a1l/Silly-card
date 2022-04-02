@@ -16,7 +16,8 @@ public class GameManagerSrc : MonoBehaviour
     public GameObject ResultGO;
     public TextMeshProUGUI ResultText;
 
-    [SerializeField]    private PlayerBase Player, Enemy;
+    [SerializeField] private PlayerBase Player, Enemy;
+    [SerializeField] private Turn Turn;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,8 @@ public class GameManagerSrc : MonoBehaviour
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
+        Turn.PlayerTurnStarted += GiveCardToPlayer;
+        Turn.EnemyTurnStarted += GiveCardToEnemy;
     }
 
     /// <summary>
@@ -41,6 +44,15 @@ public class GameManagerSrc : MonoBehaviour
         }
     }
 
+    void GiveCardToPlayer()
+    {
+        GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
+    }
+
+    void GiveCardToEnemy()
+    {
+        GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
+    }
     /// <summary>
     /// Добавляет карту в руку
     /// </summary>
@@ -49,14 +61,14 @@ public class GameManagerSrc : MonoBehaviour
     void GiveCardToHand(List<CardModelBase> deck, Transform handTransform)
     {
 
-        if (deck.Count == 0)
+        if (deck.Count == 0 || handTransform.childCount == Game.MaxFieldSize)
             return;
         CardModelBase card = deck[0];
         deck.Remove(card);
 
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
         CardBase cb = CardGo.GetComponent<CardBase>();
-        cb.Init(card);
+        cb.Init(card, handTransform == PlayerHand ? CardBase.CardOwner.Player : CardBase.CardOwner.Enemy);
         CardGo.layer = 2;
         if (handTransform == EnemyHand)
         {
@@ -134,7 +146,7 @@ public class GameManagerSrc : MonoBehaviour
 
     public void CardsFidht(CardBase card1, CardBase card2)
     {
-        if(card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
+        if (card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
         {
             uc1.GetDamage(uc2.Attack);
             uc2.GetDamage(uc1.Attack);
@@ -152,7 +164,7 @@ public class GameManagerSrc : MonoBehaviour
             }
         }
 
-        
+
     }
 
     /// <summary>

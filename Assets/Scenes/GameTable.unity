@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192eaced34f3cdc45a544183ab567e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 20
+  turnTime: 5
   turnTimeText: {fileID: 1536015773}
 --- !u!4 &140076829
 Transform:
@@ -1318,6 +1318,7 @@ MonoBehaviour:
   ResultText: {fileID: 2059505283}
   Player: {fileID: 552923640}
   Enemy: {fileID: 148099071}
+  Turn: {fileID: 140076828}
 --- !u!1 &552923635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,8 +2309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d92665918681f45942ce6774401b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 552923640}
-  enemy: {fileID: 148099071}
+  Player: {fileID: 552923640}
+  Enemy: {fileID: 148099071}
   EnemyHand: []
   PlayerHand: []
   EnemyField: []
@@ -4583,6 +4584,7 @@ GameObject:
   - component: {fileID: 1743320728}
   - component: {fileID: 1743320727}
   - component: {fileID: 1743320729}
+  - component: {fileID: 1743320730}
   m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
@@ -4672,6 +4674,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2560, y: 1440, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1743320730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743320725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47422551ba4ac14a9a36f50074ccafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Game: {fileID: 1048584577}
 --- !u!1 &1751394241
 GameObject:
   m_ObjectHideFlags: 0

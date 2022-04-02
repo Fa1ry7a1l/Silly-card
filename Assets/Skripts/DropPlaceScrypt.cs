@@ -45,7 +45,7 @@ public class DropPlaceScrypt : DropPlaceBase
         }
     }
 
-    public void OnDrop(PointerEventData eventData)
+    /*public void OnDrop(PointerEventData eventData)
     {
         //eventData.pointerDrag.
 
@@ -72,7 +72,7 @@ public class DropPlaceScrypt : DropPlaceBase
             }
 
         }
-    }
+    }*/
 
     //void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     //{

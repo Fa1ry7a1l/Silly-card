@@ -13,12 +13,12 @@ public class Game : MonoBehaviour
     /// </summary>
     public const int DeckSize = 10;
 
-    public const int StartHandSize = 4;
+    public const int StartHandSize = 3;
 
     public const int MaxFieldSize = 6;
 
-    [SerializeField] private Player player;
-    [SerializeField] private Enemy enemy;
+    [SerializeField] public Player Player;
+    [SerializeField] public Enemy Enemy;
 
 
     /// <summary>
@@ -63,6 +63,8 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
+        CardManagerSrc.GenerateCards();
+
         EnemyDeck = GiveDeckCard(false);
         PlayerDeck = GiveDeckCard(true);
 

@@ -94,16 +94,24 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 {
                     //если играется с поля
                     layerMask = 1 << 8;
-                    print("нашли маску для drop");
                 }
 
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
                 {
-                    print("вызвали drop для карты");
-
                     hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
                 }
 
+                break;
+            case MassiveTargetSpell mts:
+                layerMask = 1 << 10;
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                {
+                    print("Лечим героя+++++++");
+
+                    hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
+                    print("Лечим героя--------------");
+                    GameManager.DestroyCard(a);
+                }
                 break;
 
             default:
