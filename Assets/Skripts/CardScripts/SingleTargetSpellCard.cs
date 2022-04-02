@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 public class SingleTargetSpellCard : CardModelBase
 {
-    public delegate void CardSpell();
+    public delegate void CardSpell(ITarget it);
 
-    protected CardSpell Spell;
+    public CardSpell Spell;
 
     public SingleTargetSpellCard(string Name, string logoPath, int manaCost, CardSpell spell) : base(Name, logoPath, manaCost)
     {

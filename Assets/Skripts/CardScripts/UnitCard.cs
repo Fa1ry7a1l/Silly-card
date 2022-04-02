@@ -41,6 +41,11 @@ public class UnitCard : CardModelBase
         Defense -= dmg;
     }
 
+    public void GetHeal(int heal)
+    {
+        Defense += heal;
+    }
+
     public override CardModelBase Clone()
     {
         return new UnitCard(Name, Element, logoPath, Attack, Defense, Manacost, CanAttack);

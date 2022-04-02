@@ -8,12 +8,12 @@ using UnityEngine;
 public class BackgroundDrop : DropPlaceBase
 {
     [SerializeField] private Game Game;
+    [SerializeField] private GameManagerSrc GameManager;
 
-    public override void MyOnDrop(CardBase cardBase)
+    public override void MyOnDrop(Card cardBase)
     {
-        if(cardBase.TryPlay())
-        {
-            (cardBase.CardModel as MassiveTargetSpell).Spell(Game, cardBase.Owner);
-        }
+        (cardBase.CardModel as MassiveTargetSpell).Spell(Game, cardBase);
+
+        GameManager.DestroyCard(cardBase);
     }
 }

@@ -10,7 +10,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     Vector3 offset;
     [HideInInspector] public GameManagerSrc GameManager;
     [HideInInspector] public DropPlaceScrypt DropPlace;
-    [SerializeField] private CardBase CardShow;
+    [SerializeField] private Card CardShow;
     private bool IsDraggable;
 
     void Awake()
@@ -89,28 +89,39 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 {
                     //если выкладывается с руки
                     layerMask = 1 << 9;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                    {
+                        hit.transform.GetComponent<DropPlaceBase>()?.OnDrop(a);
+                    }
                 }
                 else
                 {
                     //если играется с поля
                     layerMask = 1 << 8;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                    {
+                        hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
+                    }
                 }
 
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
-                {
-                    hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
-                }
+                
 
                 break;
             case MassiveTargetSpell mts:
                 layerMask = 1 << 10;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
                 {
-                    print("Лечим героя+++++++");
+                    hit.transform.GetComponent<DropPlaceBase>()?.OnDrop(a);
+                }
+                break;
 
-                    hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
-                    print("Лечим героя--------------");
-                    GameManager.DestroyCard(a);
+            case SingleTargetSpellCard stsc:
+                layerMask = 1 << 8;
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                {
+
+                    hit.transform.GetComponent<DropPlaceBase>()?.OnDrop(a);
+
                 }
                 break;
 

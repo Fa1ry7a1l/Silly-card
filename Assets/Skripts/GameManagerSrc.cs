@@ -67,8 +67,8 @@ public class GameManagerSrc : MonoBehaviour
         deck.Remove(card);
 
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
-        CardBase cb = CardGo.GetComponent<CardBase>();
-        cb.Init(card, handTransform == PlayerHand ? CardBase.CardOwner.Player : CardBase.CardOwner.Enemy);
+        Card cb = CardGo.GetComponent<Card>();
+        cb.Init(card, handTransform == PlayerHand ? Card.CardOwner.Player : Card.CardOwner.Enemy);
         CardGo.layer = 2;
         if (handTransform == EnemyHand)
         {
@@ -144,7 +144,7 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
-    public void CardsFidht(CardBase card1, CardBase card2)
+    public void CardsFidht(Card card1, Card card2)
     {
         if (card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
         {
@@ -167,13 +167,22 @@ public class GameManagerSrc : MonoBehaviour
 
     }
 
+
+    public void DestroyIfDead(Card card)
+    {
+        if (card.CardModel is UnitCard uc && !uc.IsAlive)
+        {
+            DestroyCard(card);
+        }
+    }
+
     /// <summary>
     /// ”ничтожает карту
     /// </summary>
     /// <param name="card"></param>
-    public void DestroyCard(CardBase card)
+    public void DestroyCard(Card card)
     {
-        card.GetComponent<CardMovementSrc>().OnEndDrag(null);
+        //card.GetComponent<CardMovementSrc>().OnEndDrag(null);
 
         if (CurrentGame.PlayerField.Contains(card))
         {

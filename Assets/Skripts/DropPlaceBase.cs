@@ -8,7 +8,13 @@ using UnityEngine.EventSystems;
 
 public abstract class DropPlaceBase : MonoBehaviour
 {
-    abstract public void MyOnDrop(CardBase cardBase);
+    public void OnDrop(Card cardBase)
+    {
+        if (cardBase.TryPlay())
+            MyOnDrop(cardBase);
+    }
+
+    abstract public void MyOnDrop(Card cardBase);
 
 
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 
-public  class CardBase : MonoBehaviour
+public  class Card : MonoBehaviour
 {
 
     public enum CardOwner {Player,Enemy };

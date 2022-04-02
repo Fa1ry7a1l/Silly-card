@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class MassiveTargetSpell : CardModelBase
 {
-    public delegate void CardSpell(Game Game, CardBase.CardOwner Owner);
+    public delegate void CardSpell(Game Game, Card Card);
 
     public CardSpell Spell;
 

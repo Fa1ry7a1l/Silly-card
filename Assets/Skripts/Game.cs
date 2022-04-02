@@ -34,32 +34,32 @@ public class Game : MonoBehaviour
     /// <summary>
     /// Рука противника
     /// </summary>
-    public List<CardBase> EnemyHand;
+    public List<Card> EnemyHand;
 
     /// <summary>
     /// Рука игрока
     /// </summary>
-    public List<CardBase> PlayerHand;
+    public List<Card> PlayerHand;
 
     /// <summary>
     /// Поле противника
     /// </summary>
-    public List<CardBase> EnemyField;
+    public List<Card> EnemyField;
 
     /// <summary>
     /// Поле игрока
     /// </summary>
-    public List<CardBase> PlayerField;
+    public List<Card> PlayerField;
 
     /// <summary>
     /// Сброс противника
     /// </summary>
-    public List<CardBase> EnemyFold;
+    public List<Card> EnemyFold;
 
     /// <summary>
     /// Сброс игрока
     /// </summary>
-    public List<CardBase> PlayerFold;
+    public List<Card> PlayerFold;
 
     private void Awake()
     {
@@ -68,14 +68,14 @@ public class Game : MonoBehaviour
         EnemyDeck = GiveDeckCard(false);
         PlayerDeck = GiveDeckCard(true);
 
-        EnemyField = new List<CardBase>();
-        PlayerField = new List<CardBase>();
+        EnemyField = new List<Card>();
+        PlayerField = new List<Card>();
 
-        EnemyHand = new List<CardBase>();
-        PlayerHand = new List<CardBase>();
+        EnemyHand = new List<Card>();
+        PlayerHand = new List<Card>();
 
-        EnemyFold = new List<CardBase>();
-        PlayerFold = new List<CardBase>();
+        EnemyFold = new List<Card>();
+        PlayerFold = new List<Card>();
     }
 
 
@@ -89,7 +89,7 @@ public class Game : MonoBehaviour
 
         for (int i = 0; i < DeckSize; i++)
         {
-            var card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)];
+            var card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)].Clone();
             cards.Add(card);
         }
 

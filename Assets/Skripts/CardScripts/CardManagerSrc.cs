@@ -13,9 +13,9 @@ public class CardManagerSrc : MonoBehaviour
     {
         //êàğòû ñóùåñòâ
         CardManagerSrc.AllCards.Add(new UnitCard("Àäñêèé êîò", Element.Inferno, "Ñharacters/inferno/inferno_cat", 1, 1, 1));
-        CardManagerSrc.AllCards.Add(new UnitCard("Àäñêèé êóëüòèñò", Element.Inferno, "Ñharacters/inferno/inferno_occultist", 2, 1, 2));
+       /* CardManagerSrc.AllCards.Add(new UnitCard("Àäñêèé êóëüòèñò", Element.Inferno, "Ñharacters/inferno/inferno_occultist", 2, 1, 2));*/
         CardManagerSrc.AllCards.Add(new UnitCard("Äğóèä", Element.Metter, "Ñharacters/metter/matter_druid", 3, 2, 2));
-        CardManagerSrc.AllCards.Add(new UnitCard("Âåäüìà", Element.Metter, "Ñharacters/metter/matter_witch", 4, 2, 3));
+        /*CardManagerSrc.AllCards.Add(new UnitCard("Âåäüìà", Element.Metter, "Ñharacters/metter/matter_witch", 4, 2, 3));
         CardManagerSrc.AllCards.Add(new UnitCard("Îõîòíèê çà ãîëîâàìè", Element.Neutral, "Ñharacters/neutral/neutral_bounty_hunter", 2, 5, 2));
         CardManagerSrc.AllCards.Add(new UnitCard("Ïàëà÷", Element.Neutral, "Ñharacters/neutral/neutral_executioner", 3, 4, 3));
         CardManagerSrc.AllCards.Add(new UnitCard("×àñû", Element.Time, "Ñharacters/time/time_clock", 0, 6, 2));
@@ -23,17 +23,17 @@ public class CardManagerSrc : MonoBehaviour
         CardManagerSrc.AllCards.Add(new UnitCard("X", Element.Void, "Ñharacters/void/void_reaver", 5, 3, 4));
         CardManagerSrc.AllCards.Add(new UnitCard("Âèğèäèñ", Element.Void, "Ñharacters/void/void_scolopendra2_0", 2, 6, 3));
 
-        CardManagerSrc.AllCards.Add(new MassiveTargetSpell("Ëå÷åíèå", "Ñharacters/void/texture_void_bug", 2, (Game Game, CardBase.CardOwner Owner) =>
+        CardManagerSrc.AllCards.Add(new MassiveTargetSpell("Ëå÷åíèå", "Ñharacters/void/texture_void_bug", 2, (Game Game, Card Card) =>
         {
-            if (Owner == CardBase.CardOwner.Player)
-            {
-                Game.Player.Heal(3);
-            }
-            else
-            {
-                Game.Enemy.Heal(3);
-            }
+            Card.PlayerBase.Heal(3);
+        }));*/
+        CardManagerSrc.AllCards.Add(new SingleTargetSpellCard("3 óğîíà", "Ñharacters/void/texture_void_dog", 2, (ITarget it) =>
+        {
+            it.TakeDamage(3);
+            it.TakeHeal(2);
         }));
+
+
     }
 
 }
