@@ -12,10 +12,13 @@ public class ResultObj:MonoBehaviour
     [SerializeField] private PlayerBase Player;
     [SerializeField] private PlayerBase Enemy;
 
-    private void Start()
+    private void Awake()
     {
         Player.OnDeath += EnemyWon;
         Enemy.OnDeath += UserWon;
+        print("Сработал Awake");
+        gameObject.SetActive(false);
+
     }
 
     public void UserWon()

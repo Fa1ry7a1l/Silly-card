@@ -16,19 +16,29 @@ public class GameManagerSrc : MonoBehaviour
     public GameObject ResultGO;
     public TextMeshProUGUI ResultText;
 
+    public EnemyStrat EnemyLogic;
+
+    private int PlayerStepsWithoutCards = 0;
+    private int EnemyStepsWithoutCards = 0;
+
     [SerializeField] private PlayerBase Player, Enemy;
     [SerializeField] private Turn Turn;
+    private Action<int, Transform, bool> _added;
+
 
     // Start is called before the first frame update
     void Start()
     {
-
-
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
         Turn.PlayerTurnStarted += GiveCardToPlayer;
         Turn.EnemyTurnStarted += GiveCardToEnemy;
+    }
+
+    public void Init(Action<int, Transform, bool> added)
+    {
+        _added = added;
     }
 
     /// <summary>
@@ -46,12 +56,30 @@ public class GameManagerSrc : MonoBehaviour
 
     void GiveCardToPlayer()
     {
-        GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
+        if (CurrentGame.PlayerDeck.Count > 0)
+        {
+            GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
+        }
+        else
+        {
+            PlayerStepsWithoutCards++;
+            Player.Damage(PlayerStepsWithoutCards);
+        }
     }
 
     void GiveCardToEnemy()
     {
-        GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
+        if (CurrentGame.EnemyDeck.Count > 0)
+        {
+            GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
+        }
+        else
+        {
+            EnemyStepsWithoutCards++;
+            Enemy.Damage(EnemyStepsWithoutCards);
+        }
+
+        EnemyLogic.TryStep();
     }
     /// <summary>
     /// Добавляет карту в руку
@@ -68,6 +96,12 @@ public class GameManagerSrc : MonoBehaviour
 
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
         Card cb = CardGo.GetComponent<Card>();
+
+        var clone = Instantiate(CardPref, cb.transform);
+        var cloneCard = clone.GetComponent<Card>();
+        cloneCard.gameObject.SetActive(false);
+        cloneCard.Init(card, handTransform == PlayerHand ? Card.CardOwner.Player : Card.CardOwner.Enemy);
+        cb.Clone = cloneCard;
         cb.Init(card, handTransform == PlayerHand ? Card.CardOwner.Player : Card.CardOwner.Enemy);
         CardGo.layer = 2;
         if (handTransform == EnemyHand)
@@ -75,6 +109,8 @@ public class GameManagerSrc : MonoBehaviour
             cb.PlayerBase = Enemy;
             CardGo.GetComponent<CardShowSrc>().HideCardInfo();
             CurrentGame.EnemyHand.Add(cb);
+            _added?.Invoke(CurrentGame.EnemyHand.Count, EnemyHand, true);
+
         }
         else
         {
@@ -82,8 +118,10 @@ public class GameManagerSrc : MonoBehaviour
 
             CurrentGame.PlayerHand.Add(cb);
             CardGo.GetComponent<AttackedCard>().enabled = false;
+            _added?.Invoke(CurrentGame.EnemyHand.Count, EnemyHand, false);
 
         }
+
 
     }
 

@@ -10,13 +10,13 @@ public class MassiveTargetSpell : CardModelBase
 
     public CardSpell Spell;
 
-    public MassiveTargetSpell(string Name, string logoPath, int manaCost, CardSpell spell) : base(Name, logoPath, manaCost)
+    public MassiveTargetSpell(string Name, string logoPath, int manaCost, string description, CardSpell spell) : base(Name, logoPath, manaCost, description)
     {
         this.Spell = spell;
     }
 
     public override CardModelBase Clone()
     {
-        return new MassiveTargetSpell(Name, logoPath, Manacost, Spell);
+        return new MassiveTargetSpell(Name, logoPath, Manacost, Description, Spell);
     }
 }

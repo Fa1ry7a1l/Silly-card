@@ -12,7 +12,7 @@ public class SingleTargetSpellCard : CardModelBase
 
     public CardSpell Spell;
 
-    public SingleTargetSpellCard(string Name, string logoPath, int manaCost, CardSpell spell) : base(Name, logoPath, manaCost)
+    public SingleTargetSpellCard(string Name, string logoPath, int manaCost, string description, CardSpell spell) : base(Name, logoPath, manaCost, description)
     {
         this.Spell = spell;
     }
@@ -21,6 +21,6 @@ public class SingleTargetSpellCard : CardModelBase
 
     public override CardModelBase Clone()
     {
-        return new SingleTargetSpellCard(Name, logoPath, Manacost, Spell);
+        return new SingleTargetSpellCard(Name, logoPath, Manacost, Description, Spell);
     }
 }

@@ -12,16 +12,26 @@ public abstract class CardModelBase
     public Sprite Logo;
     public int Manacost;
     protected string logoPath;
-    public CardModelBase(string Name, string logoPath, int manaCost)
+    public string Description;
+    public CardModelBase(string Name, string logoPath, int manaCost, string description = "")
     {
         this.Name = Name;
         Logo = Resources.Load<Sprite>(logoPath);
         this.Manacost = manaCost;
         this.logoPath = logoPath;
-
+        Description = description;
     }
 
     public abstract CardModelBase Clone();
+
+    public  bool Equals1(object obj)
+    {
+        if (obj is CardModelBase cmb)
+        {
+            return cmb.Equals(this.Name);
+        }
+        return false;
+    }
 
 }
 

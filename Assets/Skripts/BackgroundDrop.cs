@@ -16,4 +16,11 @@ public class BackgroundDrop : DropPlaceBase
 
         GameManager.DestroyCard(cardBase);
     }
+
+    public override void MyOnDropEnemy(Card cardBase)
+    {
+        (cardBase.CardModel as MassiveTargetSpell).Spell(Game, cardBase);
+
+        GameManager.DestroyCard(cardBase);
+    }
 }

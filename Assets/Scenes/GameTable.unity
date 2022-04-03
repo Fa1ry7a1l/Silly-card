@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 148099070}
   - component: {fileID: 148099069}
   - component: {fileID: 148099071}
+  - component: {fileID: 148099073}
   - component: {fileID: 148099072}
   m_Layer: 8
   m_Name: Enemy
@@ -295,6 +296,7 @@ MonoBehaviour:
   turn: {fileID: 140076828}
   mana: {fileID: 556500480}
   hp: {fileID: 274212552}
+  GameManager: {fileID: 519420033}
 --- !u!65 &148099072
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -308,6 +310,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 300, y: 270, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &148099073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148099067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002accb962cec26459621217e34991bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyFieldList:
+  - {fileID: 1238789690}
+  - {fileID: 926897992}
+  - {fileID: 2047531472}
+  - {fileID: 422499454}
+  - {fileID: 1289600787}
+  - {fileID: 440207185}
+  PlayerFieldList:
+  - {fileID: 1214475469}
+  - {fileID: 2045372008}
+  - {fileID: 1492131131}
+  - {fileID: 1751394241}
+  - {fileID: 1888878868}
+  - {fileID: 1192556430}
+  Background: {fileID: 0}
+  EnemyHand: {fileID: 553209640}
+  Player: {fileID: 552923640}
+  Enemy: {fileID: 148099071}
+  GameManager: {fileID: 519420033}
 --- !u!114 &184682723 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1435069189083352214, guid: 1e9c39e0410632e409d0cc2a9c7089f9, type: 3}
@@ -1212,7 +1245,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   m_Layer: 0
@@ -1230,18 +1262,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab317dee2a7484c46b99b310fa2cebb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1317,8 +1337,10 @@ MonoBehaviour:
   CardPref: {fileID: 195697604704514484, guid: adf8faf93f8dfd849bd01c4f97e45b48, type: 3}
   ResultGO: {fileID: 1101741926}
   ResultText: {fileID: 2059505283}
+  EnemyLogic: {fileID: 148099073}
   Player: {fileID: 552923640}
   Enemy: {fileID: 148099071}
+  Turn: {fileID: 140076828}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,6 +1463,7 @@ MonoBehaviour:
   turn: {fileID: 140076828}
   mana: {fileID: 1923911883}
   hp: {fileID: 684854701}
+  GameManager: {fileID: 519420033}
 --- !u!1 &553209640
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,8 +2347,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d92665918681f45942ce6774401b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 552923640}
-  enemy: {fileID: 148099071}
+  Player: {fileID: 552923640}
+  Enemy: {fileID: 148099071}
   EnemyHand: []
   PlayerHand: []
   EnemyField: []
@@ -2364,7 +2387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1101741927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4615,6 +4638,7 @@ GameObject:
   - component: {fileID: 1743320728}
   - component: {fileID: 1743320727}
   - component: {fileID: 1743320729}
+  - component: {fileID: 1743320730}
   m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
@@ -4704,6 +4728,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2560, y: 1440, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1743320730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743320725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47422551ba4ac14a9a36f50074ccafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Game: {fileID: 1048584577}
+  GameManager: {fileID: 519420033}
 --- !u!1 &1751394241
 GameObject:
   m_ObjectHideFlags: 0

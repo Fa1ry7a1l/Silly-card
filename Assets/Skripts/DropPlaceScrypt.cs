@@ -28,14 +28,35 @@ public class DropPlaceScrypt : DropPlaceBase
             var card1 = transform.GetChild(0).GetComponent<Card>();
             FindObjectOfType<GameManagerSrc>().DestroyCard(card1);
         }
-
-
-
         if (card)
         {
 
             card.GameManager.CurrentGame.PlayerHand.Remove(cardBase);
             card.GameManager.CurrentGame.PlayerField.Add(cardBase);
+            card.DropPlace = this;
+            cardBase.gameObject.layer = 8;
+            cardBase.transform.SetParent(transform, false);
+
+
+        }
+    }
+
+    public override void MyOnDropEnemy(Card cardBase)
+    {
+        CardMovementSrc card = cardBase.transform.GetComponent<CardMovementSrc>();
+
+
+
+        if (transform.childCount != 0)
+        {
+            var card1 = transform.GetChild(0).GetComponent<Card>();
+            FindObjectOfType<GameManagerSrc>().DestroyCard(card1);
+        }
+        if (card)
+        {
+
+            card.GameManager.CurrentGame.EnemyHand.Remove(cardBase);
+            card.GameManager.CurrentGame.EnemyField.Add(cardBase);
             card.DropPlace = this;
             cardBase.gameObject.layer = 8;
             cardBase.transform.SetParent(transform, false);

@@ -31,5 +31,6 @@ public class Enemy : PlayerBase
     {
         turn.EnemyTurnStarted += OnTurnStarted;
         turn.EnemyTurnEnded += OnTurnEnded;
+
     }
 }

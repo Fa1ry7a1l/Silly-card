@@ -14,7 +14,7 @@ public  class Card : MonoBehaviour
     public CardOwner Owner;
     public CardShowSrc CardShow;
     public CardModelBase CardModel;
-    public CardBase Clone;
+    [HideInInspector] public Card Clone;
 
     [HideInInspector]public PlayerBase PlayerBase;
 
@@ -30,5 +30,6 @@ public  class Card : MonoBehaviour
     {
         return PlayerBase.TryPlay(CardModel);
     }
+
 
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HPBar : MonoBehaviour
 {
     public const int MaxHP = 30;
-    [SerializeField] private int _curHP = 30;
+    [SerializeField] private int _curHP = 4;
     public int CurrentHP
     {
         get { return _curHP; }

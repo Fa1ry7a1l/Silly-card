@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class CardShowSrc : MonoBehaviour
 {
     public Image Logo, ElementLogo;
-    public TextMeshProUGUI Name, Attack, Defense, ManaCost;
+    public TextMeshProUGUI Attack, Defense, ManaCost;
+    public Text Description, Name;
     public GameObject HideObj, HilightedObj;
     [SerializeField] private GameObject BottomBar;
 
@@ -16,12 +17,17 @@ public class CardShowSrc : MonoBehaviour
         HideObj.SetActive(true);
     }
 
+    public void UnHideCardInfo()
+    {
+        HideObj.SetActive(false);
+    }
+
     public void ShowCardInfo(CardModelBase card)
     {
         Logo.sprite = card.Logo;
         Logo.preserveAspect = true;
 
-        
+
         Name.text = card.Name;
         ManaCost.text = card.Manacost.ToString();
         HideObj.SetActive(false);
@@ -54,6 +60,8 @@ public class CardShowSrc : MonoBehaviour
             ElementLogo.preserveAspect = true;
 
         }
+        Description.text = card.Description;
+
     }
 
     public void HighlightCard()

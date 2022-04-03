@@ -46,6 +46,11 @@ public class PlayerBase : DropPlaceBase, ITarget
         OnHeal?.Invoke(heal, hp.CurrentHP);
     }
 
+    public int GetHP()
+    {
+        return hp.CurrentHP;    
+    }
+
 
 
     public override void MyOnDrop(Card cardBase)
@@ -78,5 +83,28 @@ public class PlayerBase : DropPlaceBase, ITarget
     public void TakeHeal(int heal)
     {
         Heal(heal);
+    }
+
+    public override void MyOnDropEnemy(Card cardBase)
+    {
+        if (turn.IsPlayerTurn)
+        {
+            return;
+        }
+        if(cardBase!= null)
+        if (cardBase.CardModel is UnitCard uc)
+        {
+            if (uc.CanAttack)
+            {
+                uc.CanAttack = false;
+                cardBase.CardShow.DeHighlightCard();
+                this.Damage(uc.Attack);
+            }
+        }
+        else if (cardBase.CardModel is SingleTargetSpellCard stsc)
+        {
+            stsc.Spell(this);
+            GameManager.DestroyCard(cardBase);
+        }
     }
 }

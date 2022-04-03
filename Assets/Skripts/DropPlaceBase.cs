@@ -13,8 +13,18 @@ public abstract class DropPlaceBase : MonoBehaviour
         if (cardBase.TryPlay())
             MyOnDrop(cardBase);
     }
+    public bool OnDropEnemy(Card cardBase)
+    {
+        if (cardBase.TryPlay())
+        {
+            MyOnDropEnemy(cardBase);
+            return true;
+        }
+        return false;
+    }
 
     abstract public void MyOnDrop(Card cardBase);
+    abstract public void MyOnDropEnemy(Card cardBase);
 
 
 }
