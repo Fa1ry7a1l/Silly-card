@@ -16,14 +16,8 @@ public class GameManagerSrc : MonoBehaviour
     public GameObject ResultGO;
     public TextMeshProUGUI ResultText;
 
-    private Action<int, Transform, bool> _added;
-
-    [SerializeField]    private PlayerBase Player, Enemy;
-
-    public void Init(Action<int, Transform, bool> added)
-    {
-        _added = added;
-    }
+    [SerializeField] private PlayerBase Player, Enemy;
+    [SerializeField] private Turn Turn;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +27,8 @@ public class GameManagerSrc : MonoBehaviour
         GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
         GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
 
+        Turn.PlayerTurnStarted += GiveCardToPlayer;
+        Turn.EnemyTurnStarted += GiveCardToEnemy;
     }
 
     /// <summary>
@@ -48,6 +44,15 @@ public class GameManagerSrc : MonoBehaviour
         }
     }
 
+    void GiveCardToPlayer()
+    {
+        GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
+    }
+
+    void GiveCardToEnemy()
+    {
+        GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
+    }
     /// <summary>
     /// Добавляет карту в руку
     /// </summary>
@@ -56,38 +61,28 @@ public class GameManagerSrc : MonoBehaviour
     void GiveCardToHand(List<CardModelBase> deck, Transform handTransform)
     {
 
-        if (deck.Count == 0)
+        if (deck.Count == 0 || handTransform.childCount == Game.MaxFieldSize)
             return;
         CardModelBase card = deck[0];
         deck.Remove(card);
 
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
-        CardBase cb = CardGo.GetComponent<CardBase>();
-        cb.Init(card);
-
-        var clone = Instantiate(CardPref, cb.transform);
-        var cloneCard = clone.GetComponent<CardBase>();
-        cloneCard.gameObject.SetActive(false);
-        cloneCard.Init(card);
-        cb.Clone = cloneCard;
-
-        
-
+        Card cb = CardGo.GetComponent<Card>();
+        cb.Init(card, handTransform == PlayerHand ? Card.CardOwner.Player : Card.CardOwner.Enemy);
         CardGo.layer = 2;
         if (handTransform == EnemyHand)
         {
             cb.PlayerBase = Enemy;
             CardGo.GetComponent<CardShowSrc>().HideCardInfo();
             CurrentGame.EnemyHand.Add(cb);
-            
-            _added?.Invoke(CurrentGame.EnemyHand.Count, EnemyHand, true);
         }
         else
         {
             cb.PlayerBase = Player;
+
             CurrentGame.PlayerHand.Add(cb);
             CardGo.GetComponent<AttackedCard>().enabled = false;
-            _added?.Invoke(CurrentGame.PlayerHand.Count, PlayerHand, false);
+
         }
 
     }
@@ -149,9 +144,9 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
-    public void CardsFidht(CardBase card1, CardBase card2)
+    public void CardsFidht(Card card1, Card card2)
     {
-        if(card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
+        if (card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
         {
             uc1.GetDamage(uc2.Attack);
             uc2.GetDamage(uc1.Attack);
@@ -169,16 +164,25 @@ public class GameManagerSrc : MonoBehaviour
             }
         }
 
-        
+
+    }
+
+
+    public void DestroyIfDead(Card card)
+    {
+        if (card.CardModel is UnitCard uc && !uc.IsAlive)
+        {
+            DestroyCard(card);
+        }
     }
 
     /// <summary>
     /// Уничтожает карту
     /// </summary>
     /// <param name="card"></param>
-    public void DestroyCard(CardBase card)
+    public void DestroyCard(Card card)
     {
-        card.GetComponent<CardMovementSrc>().OnEndDrag(null);
+        //card.GetComponent<CardMovementSrc>().OnEndDrag(null);
 
         if (CurrentGame.PlayerField.Contains(card))
         {

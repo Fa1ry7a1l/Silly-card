@@ -11,7 +11,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     float card_height;
     [HideInInspector] public GameManagerSrc GameManager;
     [HideInInspector] public DropPlaceScrypt DropPlace;
-    [SerializeField] private CardBase CardShow;
+    [SerializeField] private Card CardShow;
     private bool IsDraggable;
 
     void Awake()
@@ -89,21 +89,40 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 {
                     //если выкладывается с руки
                     layerMask = 1 << 9;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                    {
+                        hit.transform.GetComponent<DropPlaceBase>()?.OnDrop(a);
+                    }
                 }
                 else
                 {
                     //если играется с поля
                     layerMask = 1 << 8;
-                    print("нашли маску для drop");
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                    {
+                        hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
+                    }
                 }
 
+                
+
+                break;
+            case MassiveTargetSpell mts:
+                layerMask = 1 << 10;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
                 {
-                    print("вызвали drop для карты");
-
-                    hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
+                    hit.transform.GetComponent<DropPlaceBase>()?.OnDrop(a);
                 }
+                break;
 
+            case SingleTargetSpellCard stsc:
+                layerMask = 1 << 8;
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
+                {
+
+                    hit.transform.GetComponent<DropPlaceBase>()?.OnDrop(a);
+
+                }
                 break;
 
             default:

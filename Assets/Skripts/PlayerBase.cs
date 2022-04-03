@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerBase : DropPlaceBase
+public class PlayerBase : DropPlaceBase, ITarget
 {
 
     [SerializeField] public Game game;
     [SerializeField] protected Turn turn;
     [SerializeField] protected ManaBar mana;
     [SerializeField] protected HPBar hp;
+    [SerializeField] protected GameManagerSrc GameManager;
 
     public event Action<int,int> OnDamage; //сколько нанесли и новое значение hp
     public event Action<int,int> OnHeal; //сколько восстановили и новое значение hp
@@ -45,9 +46,9 @@ public class PlayerBase : DropPlaceBase
         OnHeal?.Invoke(heal, hp.CurrentHP);
     }
 
-   
 
-    public override void MyOnDrop(CardBase cardBase)
+
+    public override void MyOnDrop(Card cardBase)
     {
         if (!turn.IsPlayerTurn)
         {
@@ -62,6 +63,20 @@ public class PlayerBase : DropPlaceBase
                 cardBase.CardShow.DeHighlightCard();
                 this.Damage(uc.Attack);
             }
+        }else if (cardBase.CardModel is SingleTargetSpellCard stsc)
+        {
+            stsc.Spell(this);
+            GameManager.DestroyCard(cardBase);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Damage(damage);
+    }
+
+    public void TakeHeal(int heal)
+    {
+        Heal(heal);
     }
 }

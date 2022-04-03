@@ -5,18 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public  class CardBase : MonoBehaviour
+
+
+public  class Card : MonoBehaviour
 {
+
+    public enum CardOwner {Player,Enemy };
+    public CardOwner Owner;
     public CardShowSrc CardShow;
     public CardModelBase CardModel;
     public CardBase Clone;
 
     [HideInInspector]public PlayerBase PlayerBase;
 
-    public void Init(CardModelBase cm)
+    public void Init(CardModelBase cm,CardOwner owner)
     {
         CardModel = cm;
         CardShow.ShowCardInfo(cm);
+        Owner = owner;
     }
 
 
