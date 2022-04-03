@@ -295,7 +295,6 @@ MonoBehaviour:
   turn: {fileID: 140076828}
   mana: {fileID: 556500480}
   hp: {fileID: 274212552}
-  GameManager: {fileID: 519420033}
 --- !u!65 &148099072
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1049,8 +1048,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 932, y: -605}
-  m_SizeDelta: {x: 1860.0535, y: 400}
+  m_AnchoredPosition: {x: 932, y: -602.5}
+  m_SizeDelta: {x: 1860.0535, y: 405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &490336772
 MonoBehaviour:
@@ -1213,7 +1212,9 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1229,6 +1230,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab317dee2a7484c46b99b310fa2cebb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1306,7 +1319,21 @@ MonoBehaviour:
   ResultText: {fileID: 2059505283}
   Player: {fileID: 552923640}
   Enemy: {fileID: 148099071}
-  Turn: {fileID: 140076828}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b61a158358af6745aeba7b1101aa163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 519420033}
+  _enemy: {fileID: 553209642}
+  _player: {fileID: 472356491}
 --- !u!1 &552923635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,7 +1441,6 @@ MonoBehaviour:
   turn: {fileID: 140076828}
   mana: {fileID: 1923911883}
   hp: {fileID: 684854701}
-  GameManager: {fileID: 519420033}
 --- !u!1 &553209640
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,8 +2324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d92665918681f45942ce6774401b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 552923640}
-  Enemy: {fileID: 148099071}
+  player: {fileID: 552923640}
+  enemy: {fileID: 148099071}
   EnemyHand: []
   PlayerHand: []
   EnemyField: []
@@ -2331,6 +2357,7 @@ GameObject:
   - component: {fileID: 1101741927}
   - component: {fileID: 1101741929}
   - component: {fileID: 1101741928}
+  - component: {fileID: 1101741930}
   m_Layer: 5
   m_Name: ResultObj
   m_TagString: Untagged
@@ -2371,7 +2398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.1130868, b: 0.5660378, a: 1}
+  m_Color: {r: 0.7924528, g: 0.6496475, b: 0.21306513, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2396,6 +2423,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101741926}
   m_CullTransparentMesh: 1
+--- !u!114 &1101741930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101741926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834c7887982a824469164896025c632a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 2059505283}
+  Player: {fileID: 552923640}
+  Enemy: {fileID: 148099071}
 --- !u!114 &1150510138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4025735917175030386, guid: 7853c97fbf3bfce4eac6cde026a24537, type: 3}
@@ -4573,7 +4615,6 @@ GameObject:
   - component: {fileID: 1743320728}
   - component: {fileID: 1743320727}
   - component: {fileID: 1743320729}
-  - component: {fileID: 1743320730}
   m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
@@ -4663,20 +4704,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2560, y: 1440, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1743320730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743320725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f47422551ba4ac14a9a36f50074ccafd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Game: {fileID: 1048584577}
-  GameManager: {fileID: 519420033}
 --- !u!1 &1751394241
 GameObject:
   m_ObjectHideFlags: 0
@@ -5420,7 +5447,7 @@ GameObject:
   - component: {fileID: 2059505284}
   - component: {fileID: 2059505283}
   m_Layer: 5
-  m_Name: Result text
+  m_Name: Result text win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5465,10 +5492,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u041F\u043E\u0431\u0435\u0434\u0430!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5487,18 +5514,18 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
+  m_TextStyleHashCode: 97690656
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5522,7 +5549,7 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
-  m_uvLineOffset: 0
+  m_uvLineOffset: 1
   m_geometrySortingOrder: 0
   m_IsTextObjectScaleStatic: 0
   m_VertexBufferAutoSizeReduction: 0

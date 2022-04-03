@@ -14,6 +14,8 @@ public  class Card : MonoBehaviour
     public CardOwner Owner;
     public CardShowSrc CardShow;
     public CardModelBase CardModel;
+    public CardBase Clone;
+
     [HideInInspector]public PlayerBase PlayerBase;
 
     public void Init(CardModelBase cm,CardOwner owner)

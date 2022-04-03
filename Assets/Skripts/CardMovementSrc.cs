@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+using DG.Tweening;
+public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     Camera MainCamera;
     Vector3 offset;
+    float card_height;
     [HideInInspector] public GameManagerSrc GameManager;
     [HideInInspector] public DropPlaceScrypt DropPlace;
     [SerializeField] private Card CardShow;
@@ -21,6 +22,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        cloneDisappear();
         offset = transform.position - MainCamera.ScreenToWorldPoint(eventData.position);
         offset.z = 500;
 
@@ -28,7 +30,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
 
 
-        IsDraggable = Turn.instance.IsPlayerTurn && (DropPlace.Type == FieldType.SELF_HAND ||
+        IsDraggable = Turn.instance.IsPlayerTurn && (DropPlace!=null) && (DropPlace.Type == FieldType.SELF_HAND ||
             DropPlace.Type == FieldType.SELF_FIELD
             && (CardShow.CardModel as UnitCard).CanAttack);
 
@@ -55,9 +57,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
 
-
-
-        if (!IsDraggable)
+        if (!IsDraggable || DropPlace == null)
         {
             Vector3 nPos = MainCamera.ScreenToWorldPoint(eventData.position);
             nPos.z = 0;
@@ -67,10 +67,10 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         var a = CardShow;
 
-        
+
 
         //eventData.pointerDrag.GetComponent<>().
-
+       
         transform.SetParent(DropPlace.transform);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
@@ -138,4 +138,42 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
+    //увеличение при нажатии
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        DropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
+        
+        if (DropPlace != null && (DropPlace.Type == FieldType.SELF_HAND ||
+              DropPlace.Type == FieldType.SELF_FIELD))
+        {
+                
+                var clone = CardShow.Clone;
+                card_height = clone.transform.GetComponent<RectTransform>().rect.height;
+                clone.gameObject.SetActive(true);
+                clone.transform.DOScale(1.4f, 0.3f);
+                clone.transform.DOLocalMoveY(card_height+100, 0);
+        }
+      
+    }
+    
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        cloneDisappear();
+    }
+
+    private void cloneDisappear()
+    {
+        var clone = CardShow.Clone;
+        if (clone != null && clone.gameObject.activeSelf)
+        {
+                clone.transform.DOScale(0.9f, 0.01f).OnComplete(() =>
+                {
+                    clone.transform.DOLocalMoveY(-card_height-100, 0).OnComplete(() =>
+                    {
+                        clone.gameObject.SetActive(false);
+                    });
+                });
+        }
+        
+    }
 }
