@@ -17,6 +17,8 @@ public class PlayerBase : DropPlaceBase
     public event Action<int,int> OnDamage; //сколько нанесли и новое значение hp
     public event Action<int,int> OnHeal; //сколько восстановили и новое значение hp
 
+    public event Action OnDeath;
+
 
     public bool TryPlay(CardModelBase card)
     {
@@ -32,6 +34,9 @@ public class PlayerBase : DropPlaceBase
     {
         hp.ReduceHP(damage);
         OnDamage?.Invoke(damage,hp.CurrentHP);
+
+        if (hp.CurrentHP == 0)
+            OnDeath?.Invoke();
     }
 
     public void Heal(int heal)
