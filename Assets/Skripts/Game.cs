@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
     /// </summary>
     public const int DeckSize = 20;
 
-    public const int StartHandSize = 20;
+    public const int StartHandSize = 4;
 
     public const int MaxFieldSize = 6;
 

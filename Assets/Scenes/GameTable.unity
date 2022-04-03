@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192eaced34f3cdc45a544183ab567e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 20
+  turnTime: 5
   turnTimeText: {fileID: 1536015773}
 --- !u!4 &140076829
 Transform:
@@ -1214,6 +1214,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1318,6 +1319,21 @@ MonoBehaviour:
   ResultText: {fileID: 2059505283}
   Player: {fileID: 552923640}
   Enemy: {fileID: 148099071}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b61a158358af6745aeba7b1101aa163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 519420033}
+  _enemy: {fileID: 553209642}
+  _player: {fileID: 472356491}
 --- !u!1 &552923635
 GameObject:
   m_ObjectHideFlags: 0
