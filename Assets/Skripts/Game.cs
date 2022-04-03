@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     /// <summary>
     /// Размер изначальной колоды
     /// </summary>
-    public const int DeckSize = 10;
+    public const int DeckSize = 15;
 
     public const int StartHandSize = 3;
 
@@ -65,8 +65,8 @@ public class Game : MonoBehaviour
     {
         CardManagerSrc.GenerateCards();
 
-        EnemyDeck = GiveDeckCard(false);
-        PlayerDeck = GiveDeckCard(true);
+        EnemyDeck = GiveDeckCard();
+        PlayerDeck = GiveDeckCard();
 
         EnemyField = new List<Card>();
         PlayerField = new List<Card>();
@@ -83,16 +83,34 @@ public class Game : MonoBehaviour
     /// выдает  стартовую колоду карт
     /// </summary>
     /// <returns></returns>
-    List<CardModelBase> GiveDeckCard(bool isPlayer)
+    List<CardModelBase> GiveDeckCard()
     {
         List<CardModelBase> cards = new List<CardModelBase>();
+        for (int i = 0; i < CardManagerSrc.AllMassiveTargetSpellCards.Count; i++)
+            cards.Add(CardManagerSrc.AllMassiveTargetSpellCards[i]);
+        for (int i = 0; i < CardManagerSrc.AllSingleTargetCards.Count; i++)
+            cards.Add(CardManagerSrc.AllSingleTargetCards[i]);
 
-        for (int i = 0; i < DeckSize; i++)
+        for (int i = cards.Count; i < DeckSize; i++)
         {
             var card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)].Clone();
             cards.Add(card);
         }
 
+        return ShuffleCards(cards);
+    }
+
+    List<CardModelBase> ShuffleCards(List<CardModelBase> cards)
+    {
+        for (int i = 0; i < cards.Count - 1; i++)
+        {
+            int pos = Random.Range(i + 1, cards.Count);
+            CardModelBase b = cards[pos];
+            cards[pos] = cards[i];
+            cards[i] = b;
+        }
         return cards;
     }
+
+
 }
