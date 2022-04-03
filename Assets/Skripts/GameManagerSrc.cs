@@ -16,7 +16,14 @@ public class GameManagerSrc : MonoBehaviour
     public GameObject ResultGO;
     public TextMeshProUGUI ResultText;
 
+    private Action<int, Transform, bool> _added;
+
     [SerializeField]    private PlayerBase Player, Enemy;
+
+    public void Init(Action<int, Transform, bool> added)
+    {
+        _added = added;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -57,20 +64,30 @@ public class GameManagerSrc : MonoBehaviour
         GameObject CardGo = Instantiate(CardPref, handTransform, false);
         CardBase cb = CardGo.GetComponent<CardBase>();
         cb.Init(card);
+
+        var clone = Instantiate(CardPref, cb.transform);
+        var cloneCard = clone.GetComponent<CardBase>();
+        cloneCard.gameObject.SetActive(false);
+        cloneCard.Init(card);
+        cb.Clone = cloneCard;
+
+        
+
         CardGo.layer = 2;
         if (handTransform == EnemyHand)
         {
             cb.PlayerBase = Enemy;
             CardGo.GetComponent<CardShowSrc>().HideCardInfo();
             CurrentGame.EnemyHand.Add(cb);
+            
+            _added?.Invoke(CurrentGame.EnemyHand.Count, EnemyHand, true);
         }
         else
         {
             cb.PlayerBase = Player;
-
             CurrentGame.PlayerHand.Add(cb);
             CardGo.GetComponent<AttackedCard>().enabled = false;
-
+            _added?.Invoke(CurrentGame.PlayerHand.Count, PlayerHand, false);
         }
 
     }
