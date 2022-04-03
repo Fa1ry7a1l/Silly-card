@@ -38,15 +38,4 @@ public class AttackedCard : DropPlaceBase, ITarget
         UnitCard uc = (card.CardModel as UnitCard);
         uc.GetHeal(heal);
     }
-
-
-    /*CardShowSrc card = eventData.pointerDrag.GetComponent<CardShowSrc>();
-
-    if(card != null && 
-        card.SelfCard.CanAttack&&
-        transform.parent.GetComponent<DropPlaceScrypt>().Type == FieldType.ENEMY_FIELD)
-    {
-        card.SelfCard.ChangeAttackState(false);
-        FindObjectOfType<GameManagerSrc>().CardsFidht(card, GetComponent<CardShowSrc>());
-    }*/
 }
