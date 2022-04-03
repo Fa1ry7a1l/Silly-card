@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     /// <summary>
     /// Размер изначальной колоды
     /// </summary>
-    public const int DeckSize = 10;
+    public const int DeckSize = 20;
 
     public const int StartHandSize = 4;
 

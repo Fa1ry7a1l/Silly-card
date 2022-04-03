@@ -9,6 +9,8 @@ public  class CardBase : MonoBehaviour
 {
     public CardShowSrc CardShow;
     public CardModelBase CardModel;
+    public CardBase Clone;
+
     [HideInInspector]public PlayerBase PlayerBase;
 
     public void Init(CardModelBase cm)
