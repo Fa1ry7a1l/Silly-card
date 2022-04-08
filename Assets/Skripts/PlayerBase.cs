@@ -87,10 +87,6 @@ public class PlayerBase : DropPlaceBase, ITarget
 
     public override void MyOnDropEnemy(Card cardBase)
     {
-        if (turn.IsPlayerTurn)
-        {
-            return;
-        }
         if(cardBase!= null)
         if (cardBase.CardModel is UnitCard uc)
         {

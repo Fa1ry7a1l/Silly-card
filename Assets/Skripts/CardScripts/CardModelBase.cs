@@ -24,11 +24,11 @@ public abstract class CardModelBase
 
     public abstract CardModelBase Clone();
 
-    public  bool Equals1(object obj)
+    public override  bool Equals(object obj)
     {
         if (obj is CardModelBase cmb)
         {
-            return cmb.Equals(this.Name);
+            return cmb.Name.Equals(this.Name);
         }
         return false;
     }

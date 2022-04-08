@@ -20,7 +20,7 @@ public  class Card : MonoBehaviour
 
     public void Init(CardModelBase cm,CardOwner owner)
     {
-        CardModel = cm;
+        CardModel = cm.Clone();
         CardShow.ShowCardInfo(cm);
         Owner = owner;
     }
@@ -29,6 +29,13 @@ public  class Card : MonoBehaviour
     public bool TryPlay()
     {
         return PlayerBase.TryPlay(CardModel);
+    }
+
+    public override bool Equals(object other)
+    {
+        if (other is Card card)
+            return this.CardModel.Equals(card.CardModel);
+        return false;
     }
 
 

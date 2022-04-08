@@ -28,6 +28,8 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         DropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
 
+        if (DropPlace == null)
+            print("EEEEEEEEEEEEEEEEEEEEEEEEROR");
 
 
         IsDraggable = Turn.instance.IsPlayerTurn && (DropPlace!=null) && (DropPlace.Type == FieldType.SELF_HAND ||
@@ -101,6 +103,7 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, layerMask))
                     {
                         hit.transform.GetComponent<DropPlaceBase>()?.MyOnDrop(a);
+                        transform.SetParent(DropPlace.transform);
                     }
                 }
 
@@ -141,10 +144,10 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //увеличение при нажатии
     public void OnPointerEnter(PointerEventData eventData)
     {
-        DropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
+        DropPlaceScrypt LocalDropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
         
-        if (DropPlace != null && (DropPlace.Type == FieldType.SELF_HAND ||
-              DropPlace.Type == FieldType.SELF_FIELD))
+        if (LocalDropPlace != null && (LocalDropPlace.Type == FieldType.SELF_HAND ||
+              LocalDropPlace.Type == FieldType.SELF_FIELD))
         {
                 
                 var clone = CardShow.Clone;

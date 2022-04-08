@@ -35,7 +35,7 @@ public class DropPlaceScrypt : DropPlaceBase
             card.GameManager.CurrentGame.PlayerField.Add(cardBase);
             card.DropPlace = this;
             cardBase.gameObject.layer = 8;
-            cardBase.transform.SetParent(transform, false);
+            cardBase.transform.SetParent(transform);
 
 
         }
