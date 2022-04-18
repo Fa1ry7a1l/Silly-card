@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CardShowSrc : MonoBehaviour
 {
-    public Image Logo, ElementLogo;
+    public Image Logo;
     public TextMeshProUGUI Attack, Defense, ManaCost;
     public Text Description, Name;
     public GameObject HideObj, HilightedObj;
@@ -35,29 +35,9 @@ public class CardShowSrc : MonoBehaviour
 
         if (card is UnitCard unitCard)
         {
-            switch (unitCard.Element)
-            {
-                case Element.Void:
-                    ElementLogo.sprite = Resources.Load<Sprite>("Pin/void_element");
-                    break;
-                case Element.Neutral:
-                    ElementLogo.sprite = Resources.Load<Sprite>("Pin/neutral_element");
-                    break;
-                case Element.Metter:
-                    ElementLogo.sprite = Resources.Load<Sprite>("Pin/matter_element");
-                    break;
-                case Element.Inferno:
-                    ElementLogo.sprite = Resources.Load<Sprite>("Pin/inferno_element");
-                    break;
-                case Element.Time:
-                    ElementLogo.sprite = Resources.Load<Sprite>("Pin/time_element");
-                    break;
-
-            }
             BottomBar.SetActive(true);
             Attack.text = unitCard.Attack.ToString();
             Defense.text = unitCard.Defense.ToString();
-            ElementLogo.preserveAspect = true;
 
         }
         Description.text = card.Description;

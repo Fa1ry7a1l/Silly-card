@@ -190,8 +190,8 @@ public class GameManagerSrc : MonoBehaviour
             uc2.GetDamage(uc1.Attack);
 
             card1.CardShow.DeHighlightCard();
-            card1.CardShow.RefreshData(uc1);
-            card2.CardShow.RefreshData(uc2);
+            card1.UpdateVisualData();
+            card2.UpdateVisualData();
             if (!uc1.IsAlive)
             {
                 DestroyCard(card1);

@@ -38,5 +38,20 @@ public  class Card : MonoBehaviour
         return false;
     }
 
+    public void UpdateVisualData()
+    {
+        if (CardModel is UnitCard card)
+        {
+            CardShow.RefreshData(card);
+            Clone?.ChangeUnitCard(card.Clone());
+            Clone?.UpdateVisualData();
+        }
+    }
+
+    private void ChangeUnitCard(CardModelBase cmb)
+    {
+        CardModel = cmb;
+    }
+
 
 }
