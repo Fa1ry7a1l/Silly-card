@@ -28,8 +28,6 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         DropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
 
-        if (DropPlace == null)
-            print("EEEEEEEEEEEEEEEEEEEEEEEEROR");
 
 
         IsDraggable = Turn.instance.IsPlayerTurn && (DropPlace!=null) && (DropPlace.Type == FieldType.SELF_HAND ||
@@ -58,14 +56,16 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!IsDraggable)
+            return ;
 
-        if (!IsDraggable || DropPlace == null || !Turn.instance.IsPlayerTurn)
+        if ( DropPlace == null || !Turn.instance.IsPlayerTurn)
         {
             Vector3 nPos = MainCamera.ScreenToWorldPoint(DropPlace.transform.position);
             nPos.z = 0;
             transform.position = nPos;
 
-            if(DropPlace != null)
+            //if(DropPlace != null)
                 transform.parent = DropPlace.transform;
             return;
         }
