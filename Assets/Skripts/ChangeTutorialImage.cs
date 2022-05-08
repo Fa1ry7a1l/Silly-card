@@ -20,23 +20,35 @@ public class ChangeTutorialImage : MonoBehaviour
             image.sprite = images[position];
         }
         if (position == images.Count - 1)
+        {
             next.enabled = false;
+            next.gameObject.SetActive(false);
+        }
         if (position == 1)
+        {
             prev.enabled = true;
+            prev.gameObject.SetActive(true);
+        }
     }
 
 
     public void Previous()
     {
-        if (position - 1 >=0)
+        if (position - 1 >= 0)
         {
             position -= 1;
             image.sprite = images[position];
         }
         if (position == 0)
+        {
             prev.enabled = false;
-        if(position == images.Count - 2)
+            prev.gameObject.SetActive(false);
+        }
+        if (position == images.Count - 2)
+        {
             next.enabled = true;
+            next.gameObject.SetActive(true);
+        }
     }
 
     public void ToMainMenu()
