@@ -12,6 +12,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public static void OpenDeck()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void ShowPannel(GameObject Obj)
     {
         Obj.SetActive(true);
