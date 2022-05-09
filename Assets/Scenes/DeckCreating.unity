@@ -479,9 +479,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 204418659}
-        m_TargetAssemblyTypeName: DeckButtons, Assembly-CSharp
-        m_MethodName: Menu
+      - m_Target: {fileID: 204418660}
+        m_TargetAssemblyTypeName: DeckCreator, Assembly-CSharp
+        m_MethodName: Save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

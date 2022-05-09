@@ -14,6 +14,7 @@ public class MyDeckDrop:MonoBehaviour
     {
         if(DeckCreator.myDeckCards.Count >=10)
         {
+            card.PlaceBack();
             return;
         }
 

@@ -20,11 +20,6 @@ public class DeckCreator : MonoBehaviour
         DeckCardManager.GenerateDeck();
         //myDeckCards = CardManagerSrc.AllCards;
 
-        myDeckCards.Add(DeckCardManager.DeckCards[0]);
-        myDeckCards.Add(DeckCardManager.DeckCards[2]);
-        myDeckCards.Add(DeckCardManager.DeckCards[3]);
-        myDeckCards.Add(DeckCardManager.DeckCards[4]);
-
         //тут нужно сделать зарузку текущей колоды или стандартной, если кастомной нет
         LoadDeck();
 
@@ -35,7 +30,38 @@ public class DeckCreator : MonoBehaviour
 
     private void LoadDeck()
     {
-        //провести загрузку текущей деки
+        if(PlayerPrefs.HasKey("Cards"))
+        {
+           string[] data =  PlayerPrefs.GetString("Cards").Split("***");
+            for(int i = 0;i< data.Length;i++)
+            {
+                myDeckCards.Add(DeckCardManager.DeckCards.Find(x => x.CardName.Equals(data[i])));
+            }
+        }
+        else
+        {
+            myDeckCards.Add(DeckCardManager.DeckCards[20]);
+            myDeckCards.Add(DeckCardManager.DeckCards[21]);
+            myDeckCards.Add(DeckCardManager.DeckCards[22]);
+            myDeckCards.Add(DeckCardManager.DeckCards[23]);
+            myDeckCards.Add(DeckCardManager.DeckCards[18]);
+            myDeckCards.Add(DeckCardManager.DeckCards[19]);
+            myDeckCards.Add(DeckCardManager.DeckCards[7]);
+            myDeckCards.Add(DeckCardManager.DeckCards[0]);
+            myDeckCards.Add(DeckCardManager.DeckCards[4]);
+            myDeckCards.Add(DeckCardManager.DeckCards[6]);
+        }
+    }
+
+    public void Save()
+    {
+        string[] arr = new string[myDeckCards.Count];
+        for(int i=0;i<arr.Length;i++)
+        {
+            arr[i] = myDeckCards[i].CardName;
+        }
+        PlayerPrefs.SetString("Cards", string.Join("***", arr));
+        PlayerPrefs.Save();
     }
 
     private void LoadAllCards()
