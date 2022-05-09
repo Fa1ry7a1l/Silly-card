@@ -15,7 +15,7 @@ public class AttackedCard : DropPlaceBase, ITarget
                 transform.parent.GetComponent<DropPlaceScrypt>().Type == FieldType.ENEMY_FIELD*/)
         {
             uc.ChangeAttackState(false);
-            FindObjectOfType<GameManagerSrc>().CardsFidht(cardBase, GetComponent<Card>());
+            FindObjectOfType<GameManagerSrc>().CardsFight(cardBase, GetComponent<Card>());
         }
         else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {
@@ -30,7 +30,7 @@ public class AttackedCard : DropPlaceBase, ITarget
                 transform.parent.GetComponent<DropPlaceScrypt>().Type == FieldType.ENEMY_FIELD*/)
         {
             uc.ChangeAttackState(false);
-            FindObjectOfType<GameManagerSrc>().CardsFidht(cardBase, GetComponent<Card>());
+            FindObjectOfType<GameManagerSrc>().CardsFight(cardBase, GetComponent<Card>());
         }
         else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {

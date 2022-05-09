@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -182,26 +183,44 @@ public class GameManagerSrc : MonoBehaviour
     }
 
 
-    public void CardsFidht(Card card1, Card card2)
+    public void CardsFight(Card card1, Card card2)
     {
         if (card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
         {
-            uc1.GetDamage(uc2.Attack);
-            uc2.GetDamage(uc1.Attack);
+            //особенный MoveToTarget
+            var oldPosition = card1.transform.position;
+            var oldParent = card1.transform.parent;
+            var oldSibling = card1.transform.GetSiblingIndex();
+            card1.transform.SetParent(oldParent.parent.parent);
+            card1.transform.SetAsLastSibling();
+            card1.transform.DOMove(card2.transform.position, 1f).OnComplete(() =>
+            {
+                uc1.GetDamage(uc2.Attack);
+                uc2.GetDamage(uc1.Attack);
 
-            card1.CardShow.DeHighlightCard();
-            card1.UpdateVisualData();
-            card2.UpdateVisualData();
-            if (!uc1.IsAlive)
-            {
-                DestroyCard(card1);
-            }
-            if (!uc2.IsAlive)
-            {
-                DestroyCard(card2);
-            }
+                card1.CardShow.DeHighlightCard();
+
+                card1.UpdateVisualData();
+                card2.UpdateVisualData();
+
+                if (!uc1.IsAlive)
+                {
+                    DestroyCard(card1);
+                }
+                else card1.transform.GetComponent<CardMovementSrc>().MoveFromTarget(oldPosition, oldParent, oldSibling);
+                /*    card1.transform.DOMove(oldPosition, 1f).OnComplete(()=>
+                {
+                    card1.transform.SetParent(oldParent);
+                    card1.transform.SetSiblingIndex(oldSibling);
+                });*/
+                if (!uc2.IsAlive)
+                {
+                    DestroyCard(card2);
+                }
+
+            });
+
         }
-
 
     }
 

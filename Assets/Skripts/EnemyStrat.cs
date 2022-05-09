@@ -14,8 +14,6 @@ public class EnemyStrat : MonoBehaviour
     [SerializeField] private PlayerBase Player;
     [SerializeField] private PlayerBase Enemy;
     [SerializeField] private GameManagerSrc GameManager;
-
-
     private List<Card> GetPlayerCards()
     {
         List<Card> PlayerField = new List<Card>();
@@ -159,6 +157,7 @@ public class EnemyStrat : MonoBehaviour
             for (int i = 0; i < EnemyFieldCards.Count; i++)
             {
                 Player.MyOnDropEnemy(EnemyFieldCards[i]);
+                System.Threading.Thread.Sleep(300);
             }
             if (Player.GetHP() > 0)
             {
@@ -168,7 +167,7 @@ public class EnemyStrat : MonoBehaviour
                         Player.OnDropEnemy(AttackSpels[i]);
                     else
                         Background.MyOnDropEnemy(AttackSpels[i]);
-
+                    System.Threading.Thread.Sleep(300);
                 }
             }
 
@@ -185,13 +184,16 @@ public class EnemyStrat : MonoBehaviour
                     FindMoustPowerfullPlayerCard(PlayerFieldCards, out card);
                     //тут надо добавить подсветку карты
                     card.gameObject.GetComponent<AttackedCard>().MyOnDropEnemy(EnemyFieldCards[i]);
+                    
                 }
                 else
                 {
                     Player.MyOnDropEnemy(EnemyFieldCards[i]);
                 }
+                System.Threading.Thread.Sleep(300);
             }
         }
+        System.Threading.Thread.Sleep(1200);
         List<Card> EnemyFieldCardsNew = GetEnemyCards();
         List<Card> EnemyHandCardsNew = GetHandCards();
         int curPos = 0;
@@ -217,6 +219,7 @@ public class EnemyStrat : MonoBehaviour
                     print($"go {go != null} tempCard {tempCard != null} dropPlaceTemp {dropPlaceTemp != null}");
 
                     var res = dropPlaceTemp.OnDropEnemy(tempCard);
+                    System.Threading.Thread.Sleep(500);
                     if (res)
                         go.GetComponent<Card>().CardShow.UnHideCardInfo();
                 }

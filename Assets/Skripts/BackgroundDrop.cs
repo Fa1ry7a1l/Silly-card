@@ -19,6 +19,7 @@ public class BackgroundDrop : DropPlaceBase
 
     public override void MyOnDropEnemy(Card cardBase)
     {
+        //опять большой вопрос
         (cardBase.CardModel as MassiveTargetSpell).Spell(Game, cardBase);
 
         GameManager.DestroyCard(cardBase);

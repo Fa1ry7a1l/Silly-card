@@ -54,8 +54,10 @@ public class DropPlaceScrypt : DropPlaceBase
         }
         if (card)
         {
-
+            
             card.GameManager.CurrentGame.EnemyHand.Remove(cardBase);
+            card.MoveToField(this.transform);
+            //yield return new WaitForSeconds(.51f);
             card.GameManager.CurrentGame.EnemyField.Add(cardBase);
             card.DropPlace = this;
             cardBase.gameObject.layer = 8;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -90,17 +91,31 @@ public class PlayerBase : DropPlaceBase, ITarget
         if(cardBase!= null)
         if (cardBase.CardModel is UnitCard uc)
         {
-            if (uc.CanAttack)
-            {
-                uc.CanAttack = false;
-                cardBase.CardShow.DeHighlightCard();
-                this.Damage(uc.Attack);
-            }
+                if (uc.CanAttack)
+                {
+                    var card = cardBase.transform.GetComponent<CardMovementSrc>();
+                    card.MoveToTarget(this.transform, () =>
+                    {
+                         uc.CanAttack = false;
+                         cardBase.CardShow.DeHighlightCard();
+                         this.Damage(uc.Attack);
+                    });
+                }
         }
         else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {
-            stsc.Spell(this);
-            GameManager.DestroyCard(cardBase);
-        }
+             stsc.Spell(this);
+             GameManager.DestroyCard(cardBase);
+                //большой большой вопрос
+                /*var card = cardBase.transform.GetComponent<CardMovementSrc>();
+                    card.MoveToTarget(this.transform,
+                        () =>
+                        {
+                            stsc.Spell(this);
+                            GameManager.DestroyCard(cardBase);
+                        });
+                */
+
+            }
     }
 }

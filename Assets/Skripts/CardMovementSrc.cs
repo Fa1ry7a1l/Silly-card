@@ -152,14 +152,17 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         DropPlaceScrypt LocalDropPlace = transform.parent.GetComponent<DropPlaceScrypt>();
         
         if (LocalDropPlace != null && (LocalDropPlace.Type == FieldType.SELF_HAND ||
-              LocalDropPlace.Type == FieldType.SELF_FIELD))
+              LocalDropPlace.Type == FieldType.SELF_FIELD ||
+              LocalDropPlace.Type == FieldType.ENEMY_FIELD))
         {
-                
-                var clone = CardShow.Clone;
-                card_height = clone.transform.GetComponent<RectTransform>().rect.height;
-                clone.gameObject.SetActive(true);
-                clone.transform.DOScale(1.4f, 0.3f);
-                clone.transform.DOLocalMoveY(card_height+100, 0);
+            //CardShow.Clone.UpdateVisualData();
+            var clone = CardShow.Clone;
+            clone.transform.SetParent(GameObject.Find("Canvas").transform);
+            clone.transform.SetAsLastSibling();
+            card_height = clone.transform.GetComponent<RectTransform>().rect.height;
+            clone.gameObject.SetActive(true);
+            clone.transform.DOScale(1.4f, 0.3f);
+            clone.transform.DOLocalMoveY(card_height+100, 0);
         }
       
     }
@@ -183,5 +186,33 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 });
         }
         
+    }
+
+    public void MoveToField(Transform field)
+    {
+        //Transform parent = transform.parent;
+        transform.SetParent(field.transform);
+        transform.SetAsLastSibling();
+        transform.DOMove(field.position, .5f);
+    }
+
+    public void MoveToTarget(Transform target, TweenCallback OnCompletedActions)
+    {
+        var oldPosition = transform.position;
+        var oldParent = transform.parent;
+        var oldSibling = transform.GetSiblingIndex();
+        transform.SetParent(target.transform);
+        transform.SetAsLastSibling();
+        transform.DOMove(target.position, .5f).OnComplete(OnCompletedActions).OnComplete(() => { MoveFromTarget(oldPosition,oldParent,oldSibling); }) ;
+    }
+
+    
+    public void MoveFromTarget(Vector3 oldPosition, Transform oldParent, int oldSibling)
+    {
+        transform.DOMove(oldPosition, 1f).OnComplete(() =>
+        {
+            transform.SetParent(oldParent);
+            transform.SetSiblingIndex(oldSibling);
+        });
     }
 }
