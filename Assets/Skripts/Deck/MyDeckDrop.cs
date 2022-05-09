@@ -30,5 +30,7 @@ public class MyDeckDrop:MonoBehaviour
                 DeckCreator.myDeckCards.Add(cardBody);
             }
         }
+        DeckCreator.UpdateCounter();
+
     }
 }

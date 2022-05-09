@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DeckCreator : MonoBehaviour
@@ -7,7 +8,7 @@ public class DeckCreator : MonoBehaviour
     [HideInInspector] public List<DeckCard> myDeckCards = new List<DeckCard>();
     [SerializeField] private GameObject MyDeck;
     [SerializeField] private GameObject DeckTable;
-
+    [SerializeField] public TextMeshProUGUI Counter;
     [SerializeField] private GameObject CardPref;
     [SerializeField] private GameObject CardLinePref;
 
@@ -29,8 +30,7 @@ public class DeckCreator : MonoBehaviour
 
         LoadAllCards();
         LoadLineCards();
-
-
+        UpdateCounter();
     }
 
     private void LoadDeck()
@@ -55,6 +55,12 @@ public class DeckCreator : MonoBehaviour
             GameObject card = Instantiate(CardLinePref, MyDeck.transform, false);
             card.GetComponent<CardLineView>().Init(deckCard);
         }
+    }
+
+    public void UpdateCounter()
+    {
+        Counter.text = myDeckCards.Count.ToString() + "/10";
+
     }
 
 

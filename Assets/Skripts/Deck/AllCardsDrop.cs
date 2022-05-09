@@ -16,5 +16,7 @@ public class AllCardsDrop : MonoBehaviour
         Content.transform.GetChild(index).GetComponent<CardView>().Selected.gameObject.SetActive(false);
         DeckCreator.myDeckCards.RemoveAll(x => x.CardName.Equals(card.Name));
         Destroy(card.gameObject);
+
+        DeckCreator.UpdateCounter();
     }
 }
