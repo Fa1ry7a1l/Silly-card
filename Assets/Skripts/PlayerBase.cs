@@ -91,6 +91,7 @@ public class PlayerBase : DropPlaceBase, ITarget
         if(cardBase!= null)
         if (cardBase.CardModel is UnitCard uc)
         {
+                
                 if (uc.CanAttack)
                 {
                     var card = cardBase.transform.GetComponent<CardMovementSrc>();
@@ -104,17 +105,14 @@ public class PlayerBase : DropPlaceBase, ITarget
         }
         else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {
-             stsc.Spell(this);
-             GameManager.DestroyCard(cardBase);
-                //большой большой вопрос
-                /*var card = cardBase.transform.GetComponent<CardMovementSrc>();
-                    card.MoveToTarget(this.transform,
-                        () =>
-                        {
-                            stsc.Spell(this);
-                            GameManager.DestroyCard(cardBase);
-                        });
-                */
+              var card = cardBase.transform.GetComponent<CardMovementSrc>();
+              card.MoveToTarget(this.transform,
+                   () =>
+                   { 
+                       stsc.Spell(this);
+                       GameManager.DestroyCard(cardBase);
+                   },false);
+                
 
             }
     }

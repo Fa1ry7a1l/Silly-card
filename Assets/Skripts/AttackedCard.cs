@@ -34,8 +34,13 @@ public class AttackedCard : DropPlaceBase, ITarget
         }
         else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {
-            stsc.Spell(this);
-            FindObjectOfType<GameManagerSrc>().DestroyCard(cardBase);
+            var card = cardBase.transform.GetComponent<CardMovementSrc>();
+            card.MoveToTarget(this.transform, () =>
+             {
+                 stsc.Spell(this);
+                 FindObjectOfType<GameManagerSrc>().DestroyCard(cardBase);
+             }, false);
+            
         }
     }
 

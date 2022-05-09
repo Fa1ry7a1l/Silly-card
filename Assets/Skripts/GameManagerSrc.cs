@@ -99,7 +99,11 @@ public class GameManagerSrc : MonoBehaviour
         Card cb = CardGo.GetComponent<Card>();
 
         var clone = Instantiate(CardPref, cb.transform);
+   
+        clone.GetComponent<CanvasGroup>().interactable = false;
+        clone.GetComponent<CanvasGroup>().blocksRaycasts = false;
         var cloneCard = clone.GetComponent<Card>();
+        cloneCard.RayCaster.raycastTarget = false;
         cloneCard.gameObject.SetActive(false);
         cloneCard.Init(card, handTransform == PlayerHand ? Card.CardOwner.Player : Card.CardOwner.Enemy);
         cb.Clone = cloneCard;
@@ -119,7 +123,7 @@ public class GameManagerSrc : MonoBehaviour
 
             CurrentGame.PlayerHand.Add(cb);
             CardGo.GetComponent<AttackedCard>().enabled = false;
-            _added?.Invoke(CurrentGame.EnemyHand.Count, EnemyHand, false);
+            _added?.Invoke(CurrentGame.PlayerHand.Count, PlayerHand, false);
 
         }
 
@@ -188,12 +192,16 @@ public class GameManagerSrc : MonoBehaviour
         if (card1.CardModel is UnitCard uc1 && card2.CardModel is UnitCard uc2)
         {
             //особенный MoveToTarget
+            var oldLocalPosition = card1.transform.localPosition;
             var oldPosition = card1.transform.position;
             var oldParent = card1.transform.parent;
             var oldSibling = card1.transform.GetSiblingIndex();
             card1.transform.SetParent(oldParent.parent.parent);
             card1.transform.SetAsLastSibling();
-            card1.transform.DOMove(card2.transform.position, 1f).OnComplete(() =>
+            var duration = 1f;
+            if (card1.Owner is Card.CardOwner.Player)
+                duration = 0f;
+            card1.transform.DOMove(card2.transform.position, duration).OnComplete(() =>
             {
                 uc1.GetDamage(uc2.Attack);
                 uc2.GetDamage(uc1.Attack);
@@ -206,8 +214,18 @@ public class GameManagerSrc : MonoBehaviour
                 if (!uc1.IsAlive)
                 {
                     DestroyCard(card1);
+                    EnemyStrat.EnemyFieldChildCounts[EnemyStrat.FightCardFieldInd] = false;
                 }
-                else card1.transform.GetComponent<CardMovementSrc>().MoveFromTarget(oldPosition, oldParent, oldSibling);
+                else //card1.transform.GetComponent<CardMovementSrc>().MoveFromTarget(oldPosition, oldParent, oldSibling);
+                {
+                    if (card1.Owner is Card.CardOwner.Enemy)
+                        card1.transform.DOMove(oldPosition, 1f).OnComplete(() =>
+                    {
+                        card1.transform.SetParent(oldParent);
+                        card1.transform.SetSiblingIndex(oldSibling);
+                        //card1.transform.DOMove(oldLocalPosition, 0.5f);
+                    });
+                }
                 /*    card1.transform.DOMove(oldPosition, 1f).OnComplete(()=>
                 {
                     card1.transform.SetParent(oldParent);

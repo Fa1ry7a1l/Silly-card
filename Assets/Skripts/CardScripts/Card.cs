@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-
-
+using UnityEngine.UI;
 
 public  class Card : MonoBehaviour
 {
@@ -16,7 +15,10 @@ public  class Card : MonoBehaviour
     public CardModelBase CardModel;
     [HideInInspector] public Card Clone;
 
-    [HideInInspector]public PlayerBase PlayerBase;
+    [HideInInspector] public PlayerBase PlayerBase;
+    [SerializeField] private Image _raycaster;
+
+    public Image RayCaster => _raycaster;
 
     public void Init(CardModelBase cm,CardOwner owner)
     {
@@ -51,6 +53,7 @@ public  class Card : MonoBehaviour
     private void ChangeUnitCard(CardModelBase cmb)
     {
         CardModel = cmb;
+        
     }
 
 
