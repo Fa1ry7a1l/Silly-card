@@ -14,8 +14,8 @@ public class EnemyStrat : MonoBehaviour
     [SerializeField] private PlayerBase Player;
     [SerializeField] private PlayerBase Enemy;
     [SerializeField] private GameManagerSrc GameManager;
-
-
+    public static bool[] EnemyFieldChildCounts = new bool[6];
+    public static int FightCardFieldInd;
     private List<Card> GetPlayerCards()
     {
         List<Card> PlayerField = new List<Card>();
@@ -32,10 +32,21 @@ public class EnemyStrat : MonoBehaviour
         List<Card> EnemyField = new List<Card>();
         for (int i = 0; i < EnemyFieldList.Count; i++)
             if (EnemyFieldList[i].transform.childCount != 0)
+            {
                 EnemyField.Add(EnemyFieldList[i].transform.GetChild(0).GetComponent<Card>());
+            }
         return EnemyField;
     }
 
+    private void FillEnemyFieldChildCounts()
+    {
+        for (int i = 0; i < EnemyFieldList.Count; i++)
+                EnemyFieldChildCounts[i] = EnemyFieldList[i].transform.childCount != 0;
+            
+        print("getenemycards");
+        for (int i = 0; i < 6; i++)
+            print(EnemyFieldChildCounts[i]);
+    }
     private int GetMaxFieldDamage(List<Card> cards)
     {
         int max = 0;
@@ -148,6 +159,7 @@ public class EnemyStrat : MonoBehaviour
     {
         List<Card> PlayerFieldCards = GetPlayerCards();
         List<Card> EnemyFieldCards = GetEnemyCards();
+        FillEnemyFieldChildCounts();
         List<Card> EnemyHandCards = GetHandCards();
 
         int maxEnemyDamage = GetMaxDamageFromHand(EnemyHandCards) + GetMaxFieldDamage(EnemyFieldCards);
@@ -159,6 +171,7 @@ public class EnemyStrat : MonoBehaviour
             for (int i = 0; i < EnemyFieldCards.Count; i++)
             {
                 Player.MyOnDropEnemy(EnemyFieldCards[i]);
+                //System.Threading.Thread.Sleep(1000);
             }
             if (Player.GetHP() > 0)
             {
@@ -168,7 +181,7 @@ public class EnemyStrat : MonoBehaviour
                         Player.OnDropEnemy(AttackSpels[i]);
                     else
                         Background.MyOnDropEnemy(AttackSpels[i]);
-
+                   // System.Threading.Thread.Sleep(300);
                 }
             }
 
@@ -184,14 +197,18 @@ public class EnemyStrat : MonoBehaviour
                     Card card = null;
                     FindMoustPowerfullPlayerCard(PlayerFieldCards, out card);
                     //тут надо добавить подсветку карты
+                    FightCardFieldInd = i;
                     card.gameObject.GetComponent<AttackedCard>().MyOnDropEnemy(EnemyFieldCards[i]);
+                    
                 }
                 else
                 {
                     Player.MyOnDropEnemy(EnemyFieldCards[i]);
                 }
+                //System.Threading.Thread.Sleep(300);
             }
         }
+        //System.Threading.Thread.Sleep(3000);
         List<Card> EnemyFieldCardsNew = GetEnemyCards();
         List<Card> EnemyHandCardsNew = GetHandCards();
         int curPos = 0;
@@ -199,7 +216,7 @@ public class EnemyStrat : MonoBehaviour
         for (int j = 0; (EnemyFieldCardsNew.Count < 6 && EnemyHandCardsNew.Count > 0) && j < EnemyHandCardsNew.Count; j++)
         {
             for (; curPos < 6; curPos++)
-                if (EnemyFieldList[curPos].transform.childCount == 0)
+                if (EnemyFieldList[curPos].transform.childCount == 0 && !EnemyFieldChildCounts[curPos])
                     break;
             if (curPos != 6)
             {
@@ -215,8 +232,12 @@ public class EnemyStrat : MonoBehaviour
                     DropPlaceScrypt dropPlaceTemp = EnemyFieldList[curPos].GetComponent<DropPlaceScrypt>();
 
                     print($"go {go != null} tempCard {tempCard != null} dropPlaceTemp {dropPlaceTemp != null}");
-
+                    /*print($"beforedrop: {EnemyFieldChildCounts[0]} {EnemyFieldChildCounts[1]} {EnemyFieldChildCounts[2]} " +
+                        $"{EnemyFieldChildCounts[3]} {EnemyFieldChildCounts[4]}" +
+                        $" {EnemyFieldChildCounts[5]}");
+                    print($"step {j} dropplace {curPos}");*/
                     var res = dropPlaceTemp.OnDropEnemy(tempCard);
+                    //System.Threading.Thread.Sleep(500);
                     if (res)
                         go.GetComponent<Card>().CardShow.UnHideCardInfo();
                 }
