@@ -17,6 +17,7 @@ public class DeckCreator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(DeckCardManager.DeckCards.Count == 0)
         DeckCardManager.GenerateDeck();
         //myDeckCards = CardManagerSrc.AllCards;
 
