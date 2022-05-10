@@ -9,20 +9,24 @@ public class Settings : MonoBehaviour
     public Dropdown dropdown;
 
     // Start is called before the first frame update
+
+    string[] resolutions = { "1920x1080", "2560x1440", "3840x2160" };
     void Start()
     {
         dropdown.ClearOptions();
-        dropdown.AddOptions(QualitySettings.names.ToList());
-        dropdown.value = QualitySettings.GetQualityLevel();
+        dropdown.AddOptions(resolutions.ToList());
+
+        if (PlayerPrefs.HasKey("Resolution"))
+            dropdown.value = PlayerPrefs.GetInt("Resolution");
+        else
+            dropdown.value = 0;
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void SetQuality()
     {
-        QualitySettings.SetQualityLevel(dropdown.value);
+        Debug.Log("Устанавливаем разрешение");
+        string[] res = resolutions[dropdown.value].Split("x");
+        Screen.SetResolution(int.Parse(res[0]), int.Parse(res[1]),true);
     }
 }
