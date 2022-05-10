@@ -250,10 +250,8 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         transform.SetAsLastSibling();
 
 
-        Debug.Log("Атака карты - по лбу");
         if (WithFrom)
         {
-            Debug.Log("Атака карты - по лбу, ветка true");
             transform.DOMove(target.position, .5f).OnStepComplete(() => {
                 System.Threading.Thread.Sleep(100);
                 MoveFromTarget(oldPosition, oldParent, oldSibling);
@@ -263,7 +261,6 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else
         {
-            Debug.Log("Атака карты - по лбу, ветка else");
             transform.DOMove(target.position, .5f).OnStepComplete(OnCompletedActions);
         }
     }

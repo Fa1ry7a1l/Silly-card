@@ -54,9 +54,9 @@ public class CardView: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
         {
             return;
         }
-        //Vector3 newPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        //transform.position = newPos + offset;
-        transform.position = eventData.position;
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(eventData.position);
+        transform.position = newPos + offset;
+        //transform.position = Camera.main.ScreenToWorldPoint(eventData.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)

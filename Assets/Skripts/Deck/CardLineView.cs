@@ -14,6 +14,7 @@ public class CardLineView:MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [SerializeField] private TextMeshProUGUI Text;
     [SerializeField] public string Name { get; private set; }
     [HideInInspector] private Transform parent;
+    private Vector3 offset;
 
     public void Init(DeckCard card)
     {
@@ -29,7 +30,7 @@ public class CardLineView:MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         //    return;
         //}
 
-        //offset = transform.position - Camera.main.ScreenToWorldPoint(eventData.position);
+        offset = transform.position - Camera.main.ScreenToWorldPoint(eventData.position);
         parent = transform.parent;
         transform.SetParent(transform.parent.parent);
     }
@@ -45,9 +46,9 @@ public class CardLineView:MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         //{
         //    return;
         //}
-        //Vector3 newPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        //transform.position = newPos + offset;
-        transform.position = eventData.position;
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(eventData.position);
+        transform.position = newPos + offset;
+        //transform.position = Camera.main.ScreenToWorldPoint(eventData.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)
