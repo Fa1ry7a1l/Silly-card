@@ -36,7 +36,7 @@ public class CardLineView:MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void PlaceBack()
     {
-
+        this.transform.SetParent(parent);
     }
 
     public void OnDrag(PointerEventData eventData)

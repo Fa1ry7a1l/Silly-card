@@ -15,10 +15,24 @@ public class Turn : MonoBehaviour
     public bool IsPlayerTurn { get; private set; } = false;
     public static Turn instance;
     [SerializeField] private int turnTime;
+    [SerializeField] private int enemyTurnTime;
     [SerializeField] private TMPro.TextMeshProUGUI turnTimeText;
     IEnumerator StartTimer()
     {
         int time = turnTime;
+        turnTimeText.text = turnTime.ToString();
+
+        while (time-- > 0)
+        {
+            turnTimeText.text = GetTimerText(time);
+            yield return new WaitForSeconds(1);
+        }
+        ChangeTurn();
+    }
+
+    IEnumerator StartEnemyTimer()
+    {
+        int time = enemyTurnTime;
         turnTimeText.text = turnTime.ToString();
 
         while (time-- > 0)
@@ -52,12 +66,14 @@ public class Turn : MonoBehaviour
         if (IsPlayerTurn)
         {
             PlayerTurnStarted?.Invoke();
+            StartCoroutine(StartTimer());
         }
         else
         {
             EnemyTurnStarted?.Invoke();
+            StartCoroutine(StartEnemyTimer());
+
         }
-        StartCoroutine(StartTimer());
     }
 
     private void Start()

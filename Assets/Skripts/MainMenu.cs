@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 
     public static void OpenDeck()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void ShowPannel(GameObject Obj)

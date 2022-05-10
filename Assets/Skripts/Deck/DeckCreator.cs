@@ -64,6 +64,11 @@ public class DeckCreator : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void Reset()
+    {
+        PlayerPrefs.DeleteKey("Cards");
+    }
+
     private void LoadAllCards()
     {
         for(int i = 0;i<DeckCardManager.DeckCards.Count;i++)

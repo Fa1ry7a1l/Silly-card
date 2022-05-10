@@ -174,7 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192eaced34f3cdc45a544183ab567e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 10
+  turnTime: 15
+  enemyTurnTime: 0
   turnTimeText: {fileID: 1536015773}
 --- !u!4 &140076829
 Transform:
@@ -5702,7 +5703,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9b685484962474ec6a88381b4079f512, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
