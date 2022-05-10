@@ -174,8 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192eaced34f3cdc45a544183ab567e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 15
-  enemyTurnTime: 0
+  turnTime: 30
+  enemyTurnTime: 3
   turnTimeText: {fileID: 1536015773}
 --- !u!4 &140076829
 Transform:

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class Settings : MonoBehaviour
 {
     public Dropdown dropdown;
-
+    public TextMeshProUGUI Vsync;
 
     // Start is called before the first frame update
 
@@ -52,10 +53,12 @@ public class Settings : MonoBehaviour
         SetQuality();
         if (PlayerPrefs.HasKey("VSync"))
         {
-            if (PlayerPrefs.GetInt("VSync") != 0)
+            if (PlayerPrefs.GetInt("VSync") == 0)
             {
                 Debug.Log("FPS locked at 60 value");
                 QualitySettings.vSyncCount = 0;
+                Vsync.alpha = 0.5f;
+                Vsync.text = "Выключена";
                 Application.targetFrameRate = 60;
             }
             else
@@ -63,6 +66,8 @@ public class Settings : MonoBehaviour
                 Debug.Log("FPS unlocked");
                 QualitySettings.vSyncCount = 4;
                 Application.targetFrameRate = 500;
+                Vsync.alpha = 1f;
+                Vsync.text = "Включена";
             }
             PlayerPrefs.Save();
 
@@ -79,6 +84,9 @@ public class Settings : MonoBehaviour
                 Debug.Log("FPS locked at 60 value");
                 QualitySettings.vSyncCount = 0;
                 Application.targetFrameRate = 60;
+
+                Vsync.alpha = 0.5f;
+                Vsync.text = "Выключена";
                 PlayerPrefs.SetInt("VSync", 0);
             }
             else
@@ -86,6 +94,9 @@ public class Settings : MonoBehaviour
                 Debug.Log("FPS unlocked");
                 QualitySettings.vSyncCount = 4;
                 Application.targetFrameRate = 500;
+
+                Vsync.alpha = 1f;
+                Vsync.text = "Включена";
                 PlayerPrefs.SetInt("VSync", 1);
 
             }
