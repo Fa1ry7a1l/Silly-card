@@ -66,7 +66,7 @@ public class Game : MonoBehaviour
         CardManagerSrc.GenerateCards();
 
         EnemyDeck = GiveDeckCard();
-        PlayerDeck = GiveDeckCard();
+        PlayerDeck = TryLoadDeck();
 
         EnemyField = new List<Card>();
         PlayerField = new List<Card>();
@@ -95,6 +95,47 @@ public class Game : MonoBehaviour
         {
             var card = CardManagerSrc.AllCards[Random.Range(0, CardManagerSrc.AllCards.Count)].Clone();
             cards.Add(card);
+        }
+
+        return ShuffleCards(cards);
+    }
+
+    List<CardModelBase> TryLoadDeck()
+    {
+        List<CardModelBase> cards = new List<CardModelBase>();
+
+        if (PlayerPrefs.HasKey("Cards"))
+        {
+            string[] data = PlayerPrefs.GetString("Cards").Split("***");
+            for (int i = 0; i < data.Length; i++)
+            {
+                var c =CardManagerSrc.AllCards.Find(x => x.Name.Equals(data[i]));
+                cards.Add(c);
+                cards.Add(c);
+            }
+        }
+        else
+        {
+            cards.Add(CardManagerSrc.AllCards[20]);
+            cards.Add(CardManagerSrc.AllCards[20]);
+            cards.Add(CardManagerSrc.AllCards[21]);
+            cards.Add(CardManagerSrc.AllCards[21]);
+            cards.Add(CardManagerSrc.AllCards[22]);
+            cards.Add(CardManagerSrc.AllCards[22]);
+            cards.Add(CardManagerSrc.AllCards[23]);
+            cards.Add(CardManagerSrc.AllCards[23]);
+            cards.Add(CardManagerSrc.AllCards[18]);
+            cards.Add(CardManagerSrc.AllCards[18]);
+            cards.Add(CardManagerSrc.AllCards[19]);
+            cards.Add(CardManagerSrc.AllCards[19]);
+            cards.Add(CardManagerSrc.AllCards[7]);
+            cards.Add(CardManagerSrc.AllCards[7]);
+            cards.Add(CardManagerSrc.AllCards[0]);
+            cards.Add(CardManagerSrc.AllCards[0]);
+            cards.Add(CardManagerSrc.AllCards[4]);
+            cards.Add(CardManagerSrc.AllCards[4]);
+            cards.Add(CardManagerSrc.AllCards[6]);
+            cards.Add(CardManagerSrc.AllCards[6]);
         }
 
         return ShuffleCards(cards);
