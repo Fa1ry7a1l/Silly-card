@@ -39,9 +39,6 @@ public class PlayerBase : DropPlaceBase, ITarget
 
         if (hp.CurrentHP <= 0)
         {
-            Debug.Log("Умерли***************");
-            Debug.Log((OnDeath == null).ToString() + "-***************");
-
             OnDeath?.Invoke();
         }
     }
@@ -65,9 +62,10 @@ public class PlayerBase : DropPlaceBase, ITarget
         {
             return;
         }
-
+        Debug.Log("Получили карту по лбу");
         if (cardBase.CardModel is UnitCard uc)
         {
+            Debug.Log("Карта оказалась существом");
             if (uc.CanAttack)
             {
                 uc.CanAttack = false;
@@ -76,6 +74,8 @@ public class PlayerBase : DropPlaceBase, ITarget
             }
         }else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {
+            Debug.Log("Карта оказалась заклинанием");
+
             stsc.Spell(this);
             GameManager.DestroyCard(cardBase);
         }
@@ -93,24 +93,31 @@ public class PlayerBase : DropPlaceBase, ITarget
 
     public override void MyOnDropEnemy(Card cardBase)
     {
+        Debug.Log("Получили картой по лбу от врага");
         if(cardBase!= null)
         if (cardBase.CardModel is UnitCard uc)
         {
-                
+            Debug.Log("Карта врага оказалась существом");
+
                 if (uc.CanAttack)
                 {
+                    Debug.Log("Карта врага оказалась существом, которое может атаковать");
+
                     var card = cardBase.transform.GetComponent<CardMovementSrc>();
                     card.MoveToTarget(this.transform, () =>
                     {
-                         uc.CanAttack = false;
+                        Debug.Log("Карта врага атаковала");
+                        uc.CanAttack = false;
                          cardBase.CardShow.DeHighlightCard();
                          this.Damage(uc.Attack);
-                    });
+                    },true);
                 }
         }
         else if (cardBase.CardModel is SingleTargetSpellCard stsc)
         {
-              var card = cardBase.transform.GetComponent<CardMovementSrc>();
+                Debug.Log("Карта врага оказалась заклинанием");
+
+                var card = cardBase.transform.GetComponent<CardMovementSrc>();
               card.MoveToTarget(this.transform,
                    () =>
                    { 

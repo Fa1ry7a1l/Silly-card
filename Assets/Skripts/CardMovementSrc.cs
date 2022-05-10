@@ -249,12 +249,23 @@ public class CardMovementSrc : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             transform.SetParent(target.transform);
         transform.SetAsLastSibling();
 
+
+        Debug.Log("Атака карты - по лбу");
         if (WithFrom)
-            transform.DOMove(target.position, .5f).OnComplete(OnCompletedActions).OnComplete(() => {
+        {
+            Debug.Log("Атака карты - по лбу, ветка true");
+            transform.DOMove(target.position, .5f).OnStepComplete(() => {
                 System.Threading.Thread.Sleep(100);
-                MoveFromTarget(oldPosition, oldParent, oldSibling); });
+                MoveFromTarget(oldPosition, oldParent, oldSibling);
+            });
+
+            OnCompletedActions();
+        }
         else
-            transform.DOMove(target.position, .5f).OnComplete(OnCompletedActions);
+        {
+            Debug.Log("Атака карты - по лбу, ветка else");
+            transform.DOMove(target.position, .5f).OnStepComplete(OnCompletedActions);
+        }
     }
 
     
