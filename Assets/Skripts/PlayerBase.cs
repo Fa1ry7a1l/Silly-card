@@ -37,8 +37,13 @@ public class PlayerBase : DropPlaceBase, ITarget
         hp.ReduceHP(damage);
         OnDamage?.Invoke(damage,hp.CurrentHP);
 
-        if (hp.CurrentHP == 0)
+        if (hp.CurrentHP <= 0)
+        {
+            Debug.Log("Умерли***************");
+            Debug.Log((OnDeath == null).ToString() + "-***************");
+
             OnDeath?.Invoke();
+        }
     }
 
     public void Heal(int heal)
